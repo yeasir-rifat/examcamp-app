@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import java.io.File
 
@@ -134,7 +135,7 @@ class LiveExamEngine(
                 try {
                     dir.mkdirs()
                     val tmp = File(dir, "$CACHE_FILE.tmp")
-                    tmp.writeText(json.encodeToString(snap))
+                    tmp.writeText(json.encodeToString(LiveSnapshot.serializer(), snap))
                     val target = File(dir, CACHE_FILE)
                     if (!tmp.renameTo(target)) {
                         target.writeText(tmp.readText())
@@ -336,7 +337,7 @@ class LiveExamEngine(
         store.setBlob(
             LocalStore.GUEST,
             PENDING_KEY,
-            if (list.isEmpty()) null else json.encodeToString(list),
+            if (list.isEmpty()) null else json.encodeToString(ListSerializer(PendingResult.serializer()), list),
         )
     }
 
@@ -361,7 +362,7 @@ class LiveExamEngine(
     /** Pass null to clear the draft (after a successful send). */
     fun saveEnrollDraft(state: EnrollFormState?) {
         scope.launch {
-            store.setBlob(LocalStore.GUEST, DRAFT_KEY, state?.let { json.encodeToString(it) })
+            store.setBlob(LocalStore.GUEST, DRAFT_KEY, state?.let { json.encodeToString(EnrollFormState.serializer(), it) })
         }
     }
 

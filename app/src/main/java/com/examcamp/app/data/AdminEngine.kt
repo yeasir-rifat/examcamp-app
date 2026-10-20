@@ -14,7 +14,7 @@ import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.intOrNull
 
 /**
- * Live Exam admin writes (renderAdmin* and the save*/delete*/resolve* functions in app.js).
+ * Live Exam admin writes (the renderAdmin, save, delete and resolve functions in app.js).
  * Every write returns null on success or an error message. Successful writes reload the data.
  * Access is checked by the screen with LiveExamEngine.isLiveAdmin; RLS and the Worker check it again on the server.
  */

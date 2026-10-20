@@ -248,6 +248,7 @@ fun AppRoot(vm: AppViewModel, activity: Activity, dark: Boolean) {
                 val historyRaw by vm.examHistory.collectAsStateWithLifecycle()
                 val liveNow by vm.live.exams.collectAsStateWithLifecycle()
                 val ownScores by vm.live.myScores.collectAsStateWithLifecycle()
+                val recordNoOpenMsg = t("record.noOpen")
                 HistoryScreen(
                     practice = com.examcamp.app.data.practiceRows(historyRaw),
                     live = com.examcamp.app.data.liveRecords(liveNow, ownScores, System.currentTimeMillis()),
@@ -257,7 +258,7 @@ fun AppRoot(vm: AppViewModel, activity: Activity, dark: Boolean) {
                             review = s
                             screen = Screen.REVIEW
                         } else {
-                            liveToast(t("record.noOpen"))
+                            liveToast(recordNoOpenMsg)
                         }
                     },
                     onDeletePractice = { row -> liveScope.launch { vm.deleteHistoryRecord(row.sessionId) } },
