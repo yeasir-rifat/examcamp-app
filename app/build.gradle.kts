@@ -67,7 +67,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions { jvmTarget = "17" }
+    kotlinOptions {
+        jvmTarget = "17"
+        // Material3/Compose APIs this app uses that are still marked experimental (ModalBottomSheet,
+        // SwipeToDismissBox, FlowRow, combinedClickable ...). Opted in once here instead of per file.
+        freeCompilerArgs += listOf(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+        )
+    }
     testOptions { unitTests.isReturnDefaultValues = true }
     buildFeatures { compose = true }
     packaging {
