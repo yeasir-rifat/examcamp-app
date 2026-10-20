@@ -1,0 +1,59 @@
+name: Build debug APK
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.9
+
+      # Fonts used by the website (Lato + Noto Serif Bengali). Failures here never break the build:
+      # the app falls back to the system font if a file is missing.
+      - name: Download fonts
+        run: |
+          mkdir -p app/src/main/assets/fonts
+          cd app/src/main/assets/fonts
+          base=https://github.com/google/fonts/raw/main/ofl
+          [ -f Lato-Regular.ttf ] || curl -fsSL -o Lato-Regular.ttf "$base/lato/Lato-Regular.ttf" || true
+          [ -f Lato-Bold.ttf ] || curl -fsSL -o Lato-Bold.ttf "$base/lato/Lato-Bold.ttf" || true
+          [ -f NotoSerifBengali.ttf ] || curl -fsSL -o NotoSerifBengali.ttf "$base/notoserifbengali/NotoSerifBengali%5Bwdth%2Cwght%5D.ttf" || true
+          ls -la
+          # Debug builds keep going without fonts: the app falls back to the system font.
+          # (release.yml stays strict.)
+          for f in Lato-Regular.ttf Lato-Bold.ttf NotoSerifBengali.ttf; do
+            [ -s "$f" ] || { echo "::warning::$f is missing, the app will use the system font. Commit it to app/src/main/assets/fonts/ for the website look."; rm -f "$f"; }
+          done
+
+      - name: Check Firebase config
+        run: |
+          if [ -f app/google-services.json ]; then
+            echo "google-services.json found: Firebase login enabled."
+          else
+            echo "::warning::app/google-services.json is missing. The app will build, but Google sign-in will not work."
+          fi
+
+      - name: Unit tests
+        # Reported but never blocks the APK, so the first push always produces a build.
+        continue-on-error: true
+        run: gradle :app:testDebugUnitTest --stacktrace
+
+      - name: Build debug APK
+        run: gradle :app:assembleDebug --stacktrace
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: examcamp-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk

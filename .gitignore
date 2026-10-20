@@ -1,0 +1,16 @@
+*.iml
+.gradle/
+local.properties
+.idea/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.hprof
+
+# Release signing material must never be committed
+*.keystore
+!app/examcamp-debug.keystore
+*.jks
+keystore.b64
+local.properties

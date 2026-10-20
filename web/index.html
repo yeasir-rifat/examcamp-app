@@ -1,0 +1,2390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f1117">
+  <title>Examcamp - AI Exam System</title>
+  <meta name="description" content="Configure an AI-generated MCQ exam, or jump back into your exams, history, and statistics." />
+  <meta name="application-name" content="Examcamp" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Examcamp" />
+
+  <!-- SEO: canonical URL + crawler guidance. Canonical points at the site
+       root since this single index.html serves every "page" (home, exam,
+       stats, admin, etc.) as one document with client-side view-switching
+       (see body[data-page] throughout) rather than separate URLs — so
+       there is only ever one indexable canonical location. -->
+  <link rel="canonical" href="https://examcamp.vercel.app/" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Twitter Card: how link previews render when this URL is
+       shared on Facebook, WhatsApp, X/Twitter, Discord, etc. og:image
+       points at /og-image.png — that file does NOT exist yet in this
+       project; it needs to be a real, hosted (not base64) image, ideally
+       1200×630px, uploaded to the site root before these tags take
+       effect. Until that file exists, crawlers will silently skip the
+       image and fall back to no preview thumbnail rather than erroring. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Examcamp - AI Exam System" />
+  <meta property="og:description" content="Configure an AI-generated MCQ exam, or jump back into your exams, history, and statistics." />
+  <meta property="og:url" content="https://examcamp.vercel.app/" />
+  <meta property="og:image" content="https://examcamp.vercel.app/og-image.png" />
+  <meta property="og:site_name" content="Examcamp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Examcamp - AI Exam System" />
+  <meta name="twitter:description" content="Configure an AI-generated MCQ exam, or jump back into your exams, history, and statistics." />
+  <meta name="twitter:image" content="https://examcamp.vercel.app/og-image.png" />
+
+  <!-- Examcamp logo — used as favicon, iOS webclip (apple-touch-icon), and
+       the site header brand mark below. Embedded as base64 data URIs so
+       the app stays a single self-contained HTML file, matching every
+       other asset in this project (fonts aside). -->
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADfklEQVR42sXX3YtVVRgG8N/smUmNCiTBxgn/AoMopULQJpiEPgek7OsihG66EIoiKzEq+6DAoIsIouhC6Ati+oJK6IvKovQi/AOiLBWCIMhpnM453Tw7lrt9zsyo1YbNXmetd73redd63uddZ2jFtt/9n8/Iv+BzKC/08p40gCFUDYfdPk5r205jfLiYtygAw3HWGTBWP1UW6GApxtP/M2YaNgsCUC+wDFO4JFF8hWnMFja14zFsx3UNAO/iSRxqAzHUQsLa6Bq8lN8Hs8VrcBy344ME8CfWBth4n4COYDO+bIKoWiLv4iq8g2fj9HJsxPl4Ae9jMjswFttxzBXEq985nIe3YtMr1x1pkKiLM/EqHsKuApic506cgTewHPdkgTmMtkQ/mrEVeBB3lgCqFrZOBciu9FUFGav07cx3M67IvOF5CN3D9eFVp86sqsX4MhwozqkkTd0+jm9xA85t5P4gbVhZ8KQvgN48zkqnvZMQql6T8c3nC1xcbGnVYr8E68KVXxagePX4EfxUAimd1+fydtqP5NsNmOFCbJ7AH0m9vZnXGQCg9v1m5o20AajTYwY34oEQ8ayChGfjKdwVAg5hd0RmNNzoFhF3i+w4iseLbGs9gprpe3EltuIwvgnpDuNmTOCT7MrRiNb3Sc+qIF2VxQ/h2hzBCQCG+pTjWmaHsQEXpv8APit2q1t8V2ZnJqILAu5TPBNZ/ocUn45y3C22eHuOZqrg0+sNQTJfFtTCM4kf4+QW3Ir38EOkuY6+iuOJRPkiVke2nw+wTbGp5gNQM30SH6YYjSXl1qb9Cj7O0XTzbsBH2JPFNwbk6kbt6DYVs+RALT5LE8lz0e6yFtSpthu3YVVRdvfg7j72j6UGrEoa/q0DJYC6tG4J6uWNW5CC4SP4LVFJ1pyT+W328CvuwGvFWq0cWI/9Bfq2WjCL73I069KeHWDfic/1C7kRLVTje4274mLsB2bBPlxUjLXVglFckKj2pz06wL6Kz32DANR6PZ3+HQNqwaM4hs/zHktfP/sd8TndrBsjjS0ajrObkvNdPF2c7zLcj/tCwFpYtoSIx1OoZoqqeS8extXxfcKN+lQvpVVBtk14OfXgYAJak7GtuR0v6Fa82Gt5ab8k9pcG8Nexn2n5LzEQgH4TBowt1n7eYtQZ8NescxrsF1QNe/PcdE7VvlUH/tPnL1bNKpUWZ5pnAAAAAElFTkSuQmCC" />
+  <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABUElEQVR42o3Tv2qVQRAF8N/ud2tBTEAfxE7TKVoFKzUEH0FQArFRUYyQKpAHEETxTxGsL1qJiA9hb4pEVNDu3s/mLGzCjTiwcHb2zOycmd2ydPu3zgbMgytmKB3uOSNMuuDSkQTXkGc4E85Bf2PtgkesYTfrZoJP4Tm+Zr2Ir6BMUtIswefxOIcP8ROXcau7dD3n6xgmneYL2MCf7DfwDJe6Xkil17CEg+qolWN4bM1aYGPrQUvyEds4i3PYid6Xkdm4A/Zw2CS08t7gB+4m4TtM8Tn76+G9TX8K5hMnWyv9F95HM3yIr7YEbQo30sgn3RTG4FXcyf5RxvgaQ+2msIJN7ONb8FVcCT7Ed9zDxcTM6wll/y8+MoVP2IrWZTxNE6fByznbChdqP4VXcT7oEk6DT+N+8JdwC2al+41lwaMpi8ruufWYtqF9kuDxH37wF6IMW3Bi2ezbAAAAAElFTkSuQmCC" />
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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" />
+
+  <!-- Google Fonts: Lato for the English root typeface, Noto Serif
+       Bengali for the Bengali root typeface — both loaded below so they
+       render consistently regardless of what's installed locally. Lato's
+       own 300/400/700/900 weights are loaded (true light/regular/bold/
+       black files). Noto Serif Bengali is loaded at 400/500/600/700 —
+       all real files — so every weight a component asks for resolves to
+       a genuine face for Bengali too (no synthetic/faux bold). Lato has
+       no 500/600 file, so there 500 renders as 400 and 600 as 700 by
+       normal CSS weight matching, while Bengali gets true 500/600. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Noto+Serif+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Kalpurush: NOT used by the site UI any more (the UI is Lato + Noto
+       Serif Bengali only). Kept loaded solely because it is one of the
+       selectable fonts in the Download/PDF preview settings; the browser
+       only downloads it if that option is actually used. -->
+  <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet" />
+  <!-- PDF/Download-preview typography offers Times New Roman, Cambria,
+       Kalpurush, and NikoshBAN in addition to Noto Serif Bengali — these
+       four are not on Google Fonts (Times New Roman/Cambria ship with
+       Windows/Office, Kalpurush/NikoshBAN are common local Bengali fonts
+       on Bangladeshi systems), so they fall back gracefully to the
+       browser's serif default if not installed locally. -->
+
+  <!-- PDF export: rasterizes each paginated .paper-page and assembles a
+       real, downloadable .pdf (see downloadExam()) instead of routing the
+       "Download" button through the browser's print dialog. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <!-- Rich-text MCQ editor (Question Builder → manual input) uses Lucide
+       icons for its inline toolbar and DOMPurify to sanitize contenteditable
+       HTML before it is stored — mirrors mcq-pro.html's own editor. -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.4.15/purify.min.js" defer></script>
+
+  <!-- Math / chemistry notation: renders $...$ / $$...$$ segments inside
+       question, option, and explanation text (see renderMathIn() /
+       katex-render.js) so formulas like $x^2 + y^2 = r^2$ or $H_2O$ show
+       as real typeset notation instead of raw AI-emitted markup. Loaded
+       eagerly (not `defer`) because renderQuestionStream()/renderAnswerReview()
+       call window.katex synchronously as soon as a question renders. -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+
+  <!-- Firebase: Google Sign-In (Authentication) + Firestore (per-user cloud
+       storage for exam history, AI/API config, and preferences). Uses the
+       "compat" SDK build so it works with plain <script> tags, no bundler.
+       Loaded eagerly (not `defer`): app.js's config/init code runs
+       synchronously as soon as it loads, so firebase must already be
+       defined by then. -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+  <!-- Supabase: Postgres database (per-user sync data + Live Exam campaign
+       data) on the free plan. Auth stays on Firebase (above) — Supabase is
+       used purely as a data store here, keyed by Firebase UID. -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <!-- Populated by enterPrint()/paginateExam() with the correct @page size
+       for the selected paper size, so a manual browser print (Ctrl/Cmd+P)
+       matches the true physical page — no fixed margin is added here
+       because .paper-page already supplies its own visual margin via
+       padding. -->
+  <style id="dynamic-page-size"></style>
+  <!-- Apply stored theme before paint to avoid a flash of wrong styling.
+       Kept inline (not in app.js) because it must run before first paint,
+       ahead of app.js which is not deferred but is loaded after this. -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json">
+</head>
+<body data-page="home">
+<div class="view is-active" id="view-home">
+
+  <a href="#main-content" class="skip-link" data-i18n="common.skipToContent">Skip to main content</a>
+
+  <div class="app-shell">
+    <!-- ==========================================================
+         HEADER
+         ========================================================== -->
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href="index.html" class="site-header__brand" aria-label="Examcamp home">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="36" height="36" />
+          <span data-i18n="brand.name">Examcamp</span>
+          <span class="brand-live-indicator" id="brand-live-indicator-home" hidden></span>
+        </a>
+
+        <div class="site-header__actions">
+          <!-- Theme toggle: single dynamic icon button, toggles Light <-> Dark.
+               The icon itself swaps to reflect the *current* active theme
+               (sun = light, moon = dark), and a quick radial reveal
+               animation sweeps the new theme out from this button across
+               the whole page on switch. See theme.js. -->
+          <button type="button" class="icon-btn theme-toggle-btn" id="themeToggleBtn" data-theme-cycle title="Toggle theme" aria-label="Toggle theme">
+            <svg class="theme-toggle-btn__icon theme-toggle-btn__icon--light" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <svg class="theme-toggle-btn__icon theme-toggle-btn__icon--dark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 14.5a8.5 8.5 0 1 1-9-11 6.8 6.8 0 0 0 9 11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </button>
+
+          <!-- Language toggle: EN | বাংলা -->
+          <div class="segmented" role="group" aria-label="Language">
+            <button type="button" class="segmented__option" data-lang-option="en" aria-pressed="false">EN</button>
+            <button type="button" class="segmented__option" data-lang-option="bn" aria-pressed="false" lang="bn">বাংলা</button>
+          </div>
+
+          <!-- Settings -->
+          <button type="button" class="icon-btn" data-modal-open="settings-modal" aria-label="Settings" title="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>
+              <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>
+            </svg>
+          </button>
+
+          <!-- Auth: signed-out shows "Sign in", signed-in shows avatar + name
+               with a dropdown containing Sync status and Sign out. Both
+               states live in the DOM; auth.js toggles visibility via the
+               is-signed-in / is-signed-out classes on #auth-widget. -->
+          <div id="auth-widget" class="auth-widget is-signed-out">
+            <button type="button" id="auth-signin-btn" class="btn btn-secondary btn-sm auth-widget__signin">
+              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.98v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.66 9c0-.59.1-1.17.28-1.7V4.96H.98A9 9 0 0 0 0 9c0 1.45.35 2.83.98 4.04l2.97-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .98 4.96l2.97 2.34C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+              <span data-i18n="auth.signIn">Sign in with Google</span>
+            </button>
+            <button type="button" id="auth-user-btn" class="auth-widget__user" aria-haspopup="true" aria-expanded="false">
+              <img id="auth-user-avatar" class="auth-widget__avatar" src="" alt="" referrerpolicy="no-referrer" />
+              <span id="auth-sync-dot" class="auth-widget__sync-dot" title="Synced to cloud" aria-hidden="true"></span>
+            </button>
+            <div id="auth-user-menu" class="auth-widget__menu" role="menu" aria-hidden="true">
+              <div class="auth-widget__menu-header">
+                <img id="auth-user-avatar-lg" class="auth-widget__avatar-lg" src="" alt="" referrerpolicy="no-referrer" />
+                <div class="auth-widget__menu-identity">
+                  <span id="auth-user-name" class="auth-widget__menu-name"></span>
+                  <span id="auth-user-email" class="auth-widget__menu-email"></span>
+                </div>
+              </div>
+              <div id="auth-sync-status" class="auth-widget__menu-status">
+                <span class="auth-widget__sync-dot" aria-hidden="true"></span>
+                <span data-i18n="auth.synced">Synced to cloud</span>
+              </div>
+              <button type="button" id="auth-signout-btn" class="auth-widget__menu-signout" role="menuitem">
+                <span data-i18n="auth.signOut">Sign out</span>
+              </button>
+              <button type="button" id="auth-delete-btn" class="auth-widget__menu-signout auth-widget__menu-delete" role="menuitem">
+                <span data-i18n="auth.deleteAccount">Delete account</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+      <div class="container">
+
+        <div class="homepage-grid" data-home-tab="dashboard">
+
+          <!-- Mobile-only tabs: Dashboard (with Recent Exams attached) | AI Mode -->
+          <div class="home-tabs" role="tablist" aria-label="Home sections">
+            <button type="button" class="home-tabs__tab is-active" role="tab" id="home-tab-dashboard" aria-selected="true" aria-controls="home-panel-dashboard" data-home-tab-btn="dashboard"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.8"/></svg><span data-i18n="home.dashboard.title">Dashboard</span></button>
+            <button type="button" class="home-tabs__tab" role="tab" id="home-tab-ai" aria-selected="false" aria-controls="home-panel-ai" data-home-tab-btn="ai"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.2l1.35 3.45 3.45 1.35-3.45 1.35L12 16.8l-1.35-3.45L7.2 12l3.45-1.35L12 7.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span data-i18n="home.aiMode.title">AI Mode</span></button>
+          </div>
+
+          <!-- ==========================================================
+               AI MODE
+               ========================================================== -->
+          <section class="card ai-mode-card" id="home-panel-ai" role="tabpanel" aria-labelledby="home-tab-ai">
+            <div class="ai-mode-card__heading">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3l1.8 4.6L18.4 9.4 13.8 11.2 12 15.8l-1.8-4.6L5.6 9.4l4.6-1.8L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              </svg>
+              <h2 id="ai-mode-title" data-i18n="home.aiMode.title">AI Mode</h2>
+            </div>
+
+            <form id="ai-mode-form" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="prompt-input" data-i18n="home.aiMode.promptLabel">Prompt</label>
+                <textarea
+                  class="form-control"
+                  id="prompt-input"
+                  name="prompt"
+                  placeholder="Type what you want to create an exam about…"
+                  data-i18n-placeholder="home.aiMode.promptPlaceholder"
+                  aria-describedby="prompt-error"
+                  aria-required="true"
+                ></textarea>
+                <span class="form-error" id="prompt-error" role="alert">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span data-i18n="home.aiMode.promptError">Please write your exam descriptions..</span>
+                </span>
+              </div>
+
+              <div class="capture-upload-row">
+                <button type="button" class="btn btn-outline" data-action="capture">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1-2h7l1 2h2A1.5 1.5 0 0 1 20 8.5v9A1.5 1.5 0 0 1 18.5 19h-13A1.5 1.5 0 0 1 4 17.5v-9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.6"/></svg>
+                  <span data-i18n="home.aiMode.capture">Capture</span>
+                </button>
+                <button type="button" class="btn btn-outline" data-action="upload">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  <span data-i18n="home.aiMode.upload">Upload</span>
+                </button>
+                <!-- Capture: camera-only via the `capture` attribute so mobile browsers
+                     open the device camera directly instead of a general picker. -->
+                <input type="file" data-capture-input class="visually-hidden" accept="image/*" capture="environment" aria-hidden="true" tabindex="-1" />
+                <!-- Upload: general file picker, multi-select, restricted to the
+                     accepted study-material types. -->
+                <input type="file" data-file-input class="visually-hidden" accept="image/*,application/pdf,.doc,.docx,.ppt,.pptx" multiple aria-hidden="true" tabindex="-1" />
+              </div>
+
+              <!-- Captured / uploaded attachments: rendered as an "icon + name"
+                   list, each removable, with a trailing "+ Add More" action that
+                   re-opens the upload picker. Hidden entirely while empty. -->
+              <div class="attachment-list" data-attachment-list hidden></div>
+
+              <div class="config-grid">
+                <div class="form-group">
+                  <label class="form-label" for="questions-input" data-i18n="home.aiMode.questionsLabel">Questions</label>
+                  <input
+                    class="form-control no-spinner"
+                    id="questions-input"
+                    name="questions"
+                    type="number"
+                    min="1"
+                    max="200"
+                    step="1"
+                    value="50"
+                    inputmode="numeric"
+                    placeholder="Enter number of questions"
+                    data-i18n-placeholder="home.aiMode.questionsPlaceholder"
+                    aria-describedby="questions-error"
+                  />
+                  <span class="form-error" id="questions-error" role="alert">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span data-i18n="home.aiMode.questionsError">Enter a number between 1 and 200.</span>
+                  </span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="difficulty-select" data-i18n="home.aiMode.difficultyLabel">Difficulty</label>
+                  <select class="form-control" id="difficulty-select" name="difficulty">
+                    <option value="easy" data-i18n="common.easy">Easy</option>
+                    <option value="medium" selected data-i18n="common.medium">Medium</option>
+                    <option value="hard" data-i18n="common.hard">Hard</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="language-select" data-i18n="home.aiMode.languageLabel">Language</label>
+                  <select class="form-control" id="language-select" name="language">
+                    <option value="en" data-i18n="common.langEnglish">English</option>
+                    <option value="bn" data-i18n="common.langBengali">বাংলা</option>
+                    <option value="en-bn" selected data-i18n="common.langMixed">English + বাংলা</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="time-select" data-i18n="home.aiMode.timeLabel">Time</label>
+                  <select class="form-control" id="time-select" name="time">
+                    <option value="10" data-i18n="common.min10">10 minutes</option>
+                    <option value="20" data-i18n="common.min20">20 minutes</option>
+                    <option value="30" data-i18n="common.min30">30 minutes</option>
+                    <option value="60" selected data-i18n="common.min60">60 minutes</option>
+                    <option value="90" data-i18n="common.min90">90 minutes</option>
+                    <option value="120" data-i18n="common.min120">120 minutes</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="subject-input" data-i18n="home.aiMode.subjectLabel">Subject</label>
+                  <input
+                    class="form-control"
+                    id="subject-input"
+                    name="subject"
+                    type="text"
+                    placeholder="Enter subject"
+                    data-i18n-placeholder="home.aiMode.subjectPlaceholder"
+                    autocomplete="off"
+                    aria-describedby="subject-error"
+                  />
+                  <span class="form-error" id="subject-error" role="alert">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span data-i18n="home.aiMode.subjectError">Please enter a subject.</span>
+                  </span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="topic-input" data-i18n="home.aiMode.topicLabel">Topic</label>
+                  <input
+                    class="form-control"
+                    id="topic-input"
+                    name="topic"
+                    type="text"
+                    placeholder="Enter topic or chapter"
+                    data-i18n-placeholder="home.aiMode.topicPlaceholder"
+                    autocomplete="off"
+                    aria-describedby="topic-error"
+                  />
+                  <span class="form-error" id="topic-error" role="alert">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span data-i18n="home.aiMode.topicError">Please enter a topic.</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="ai-mode-card__spacer" aria-hidden="true"></div>
+
+              <button type="submit" class="btn btn-primary btn-lg btn-block btn-generate" id="generate-btn">
+                <span class="btn-generate__label" data-i18n="home.aiMode.generate">Generate Exam</span>
+                <span class="btn-generate__spinner spinner" style="border-color: rgba(255,255,255,0.35); border-top-color: #fff;" aria-hidden="true"></span>
+              </button>
+
+            </form>
+          </section>
+
+          </section>
+
+          <!-- ==========================================================
+               DASHBOARD + CONTINUE EXAM
+               ========================================================== -->
+          <div class="homepage-side-col" id="home-panel-dashboard" role="tabpanel" aria-labelledby="home-tab-dashboard">
+            <section class="card dashboard-card" aria-labelledby="dashboard-title">
+              <div class="dashboard-card__heading">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.8"/></svg>
+                <h2 id="dashboard-title" data-i18n="home.dashboard.title">Dashboard</h2>
+              </div>
+
+              <div class="dashboard-list">
+                <a href="#" class="dashboard-item dashboard-item--live" data-spa-nav="live-exam">
+                  <span class="dashboard-item__icon">
+                    <svg viewBox="-2 -2 28 28" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M6.2 6.2a8.1 8.1 0 0 0 0 11.6M17.8 6.2a8.1 8.1 0 0 1 0 11.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3.2 3.2a12.6 12.6 0 0 0 0 17.6M20.8 3.2a12.6 12.6 0 0 1 0 17.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.55"/></svg>
+                  </span>
+                  <span class="dashboard-item__body">
+                    <span class="dashboard-item__title"><span data-i18n="home.dashboard.liveTitle">Live Exam</span><span class="live-pulse-dot" aria-hidden="true"></span></span>
+                    <span class="dashboard-item__desc" data-i18n="home.dashboard.liveDesc">Join live exams now</span>
+                  </span>
+                  <svg class="dashboard-item__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+
+                <a href="#" class="dashboard-item dashboard-item--practice" data-spa-nav="practice">
+                  <span class="dashboard-item__icon">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 8h7M9 11.5h7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                  </span>
+                  <span class="dashboard-item__body">
+                    <span class="dashboard-item__title" data-i18n="home.dashboard.practiceTitle">Practice</span>
+                    <span class="dashboard-item__desc" data-i18n="home.dashboard.practiceDesc">Sharpen skills, build habits</span>
+                  </span>
+                  <svg class="dashboard-item__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+
+                <a href="#" class="dashboard-item dashboard-item--stats" data-spa-nav="statistics">
+                  <span class="dashboard-item__icon">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19V10M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+                  </span>
+                  <span class="dashboard-item__body">
+                    <span class="dashboard-item__title" data-i18n="home.dashboard.statsTitle">Statistics</span>
+                    <span class="dashboard-item__desc" data-i18n="home.dashboard.statsDesc">Track scores and growth</span>
+                  </span>
+                  <svg class="dashboard-item__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+
+              <!-- Quick stats — 3 individual cards, secondary, compact, never competing with AI Mode.
+                   Clickable: each routes to the relevant deep-dive page (Exams total -> Exams list,
+                   Avg. Score / Questions -> Statistics overview). -->
+              <div class="quick-stats-grid">
+                <button type="button" class="quick-stat-card quick-stat-card--link quick-stat-card--exams" data-spa-nav="history">
+                  <div class="quick-stat-card__value" id="quick-stat-exams">0</div>
+                  <div class="quick-stat-card__label" data-i18n="home.dashboard.quickExams">Exams</div>
+                </button>
+                <button type="button" class="quick-stat-card quick-stat-card--link quick-stat-card--avg" data-spa-nav="statistics">
+                  <div class="quick-stat-card__value" id="quick-stat-avg">0%</div>
+                  <div class="quick-stat-card__label" data-i18n="home.dashboard.quickAvgScore">Avg. Score</div>
+                </button>
+                <button type="button" class="quick-stat-card quick-stat-card--link quick-stat-card--questions" data-spa-nav="statistics">
+                  <div class="quick-stat-card__value" id="quick-stat-questions">0</div>
+                  <div class="quick-stat-card__label" data-i18n="home.dashboard.quickQuestions">Questions</div>
+                </button>
+              </div>
+            </section>
+
+            <!-- Continue / Recent exam — demo state controlled by data-recent-exam -->
+            <section class="card continue-card" aria-labelledby="recent-title" data-recent-exam="continue">
+
+              <div data-recent-continue>
+                <p class="continue-card__label">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 4v5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span id="recent-title" data-i18n="home.continue.title">Continue Exam</span>
+                </p>
+                <p class="continue-card__title">Agriculture</p>
+                <p class="continue-card__topic">Plant Pathology</p>
+                <div class="continue-card__progress-label">
+                  <span><span id="continue-progress-count">32 / 50</span> <span data-i18n="home.continue.questionsCompleted">questions completed</span></span>
+                  <span>64%</span>
+                </div>
+                <div class="progress" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="Exam progress">
+                  <div class="progress__fill" style="width: 64%;"></div>
+                </div>
+                <a href="#" id="continue-exam-link" class="btn btn-secondary">
+                  <span data-i18n="home.continue.continueBtn">Continue</span>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+
+              <div data-recent-empty hidden class="recent-empty">
+                <p class="text-h4" style="margin-bottom: var(--space-1);" data-i18n="home.continue.emptyTitle">Recent Exams</p>
+                <p class="text-small text-secondary" style="margin-bottom: var(--space-5);" data-i18n="home.continue.emptyDesc">No recent exams yet.</p>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('prompt-input').focus()" data-i18n="home.continue.emptyCta">
+                  Create Your First Exam
+                </button>
+              </div>
+            </section>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p class="text-caption" data-i18n="footer.copyright">© 2026 Examcamp</p>
+    </footer>
+  </div>
+
+  <!-- ==========================================================
+       SETTINGS MODAL
+       ========================================================== -->
+  </div><!-- /view-home -->
+
+  <!-- ==========================================================
+       VIEW: LIVE EXAM HUB — Central Live Exam campaign home,
+       reached from the "Live Exam" vertical dashboard card. This
+       is the subscriber-facing hub: countdown to the next
+       scheduled live exam, the full campaign routine, and quick
+       access to the Central Merit list and Admin Panel (visible
+       to admins only). Distinct from #view-exam (single active
+       AI-generated exam session) and #view-live-exam-admin
+       (organizer controls).
+       ========================================================== -->
+  <div class="view" id="view-live-exam" hidden>
+    <header class="subpage-header">
+      <div class="container subpage-header__inner">
+        <span class="subpage-header__title subpage-header__title--brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span data-i18n="brand.name">Examcamp</span>
+          <span class="brand-live-indicator" id="brand-live-indicator-live-exam" hidden></span>
+        </span>
+        <div class="subpage-header__right">
+          <button type="button" class="icon-btn icon-btn--home" data-spa-nav="home" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn icon-btn--back" data-spa-nav="home" aria-label="Back" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="subpage-main">
+      <div class="container">
+
+        <!-- Live campaign cards: one per Subject Campaign this student is
+             actually subscribed to, each with its own independent
+             countdown/join control. Populated by renderLiveCampaignCards()
+             in the script below; falls back to an empty state when the
+             student isn't subscribed to anything yet. -->
+        <div class="live-campaign-cards" id="live-campaign-cards">
+          <!-- populated by renderLiveCampaignCards() -->
+        </div>
+
+        <!-- Quick stats: subscriber's own standing in the campaign so far —
+             merged into a single card with dividers between the three
+             stats (was 3 separate tinted cards; see .live-summary-card
+             below for the merged layout). -->
+        <div class="card live-summary-card" style="margin-top: var(--space-4);">
+          <div class="live-summary-card__stat">
+            <div class="subpage-summary__value" id="live-summary-rank">-</div>
+            <div class="subpage-summary__label" data-i18n="live.summary.rank">Last Exam Rank</div>
+          </div>
+          <div class="live-summary-card__divider" aria-hidden="true"></div>
+          <div class="live-summary-card__stat">
+            <div class="subpage-summary__value" id="live-summary-given">0</div>
+            <div class="subpage-summary__label" data-i18n="live.summary.given">Exams Given</div>
+          </div>
+          <div class="live-summary-card__divider" aria-hidden="true"></div>
+          <div class="live-summary-card__stat">
+            <div class="subpage-summary__value" id="live-summary-avg">0%</div>
+            <div class="subpage-summary__label" data-i18n="live.summary.avg">Course Avg.</div>
+          </div>
+        </div>
+
+        <!-- Tabs: Routine (schedule) / Enrolled Subjects / Central Merit -->
+        <div class="tabs" style="margin-top: var(--space-8);" role="tablist">
+          <button type="button" class="tab is-active" data-live-tab="routine" role="tab" aria-selected="true"><svg class="tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2.2"/><path d="M3.5 9.5h17"/><path d="M8 3v3M16 3v3"/></svg><span data-i18n="live.tab.routine">Routine</span></button>
+          <button type="button" class="tab" data-live-tab="subjects" role="tab" aria-selected="false"><svg class="tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 8h7M9 11.5h7"/></svg><span data-i18n="live.tab.subjects">Subjects</span></button>
+          <button type="button" class="tab" data-live-tab="merit" role="tab" aria-selected="false"><svg class="tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8L12 3Z"/></svg><span data-i18n="live.tab.merit">Merit</span></button>
+        </div>
+
+        <!-- ---- Routine panel ---- -->
+        <section class="live-tab-panel" id="live-panel-routine">
+          <div class="live-routine-groups" id="live-routine-list">
+            <!-- populated by renderLiveRoutine() -->
+          </div>
+        </section>
+
+        <!-- ---- Enrolled subjects panel ---- -->
+        <section class="live-tab-panel" id="live-panel-subjects" style="display: none;">
+          <div class="live-subject-list" id="live-subject-grid">
+            <!-- populated by renderLiveSubjects() -->
+          </div>
+        </section>
+
+        <!-- ---- Central Merit panel ---- -->
+        <section class="live-tab-panel" id="live-panel-merit" style="display: none;">
+          <div class="card" id="live-merit-card">
+            <div class="card__header">
+              <h2 class="text-h4" data-i18n="live.merit.heading">Merit list</h2>
+            </div>
+            <div class="live-merit-filters">
+              <div class="form-group">
+                <label class="form-label" for="live-merit-course" data-i18n="live.merit.course">Course</label>
+                <select id="live-merit-course" class="form-control"></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="live-merit-exam" data-i18n="live.merit.exam">Live exam</label>
+                <select id="live-merit-exam" class="form-control"></select>
+              </div>
+            </div>
+            <div class="live-merit-list" id="live-merit-list">
+              <!-- populated by renderLiveMerit() -->
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div><!-- /view-live-exam -->
+
+  <!-- ==========================================================
+       VIEW: LIVE EXAM — ADMIN PANEL. Gated to the configured
+       admin Gmail account(s) (see LIVE_EXAM_ADMIN_EMAILS below);
+       Assistant Admins added from the Subscribers tab also get
+       access. Controls: question bank per live exam, schedule /
+       countdown, multi-exam setup, result publishing, and
+       subscription (member) management.
+       ========================================================== -->
+  <div class="view" id="view-live-exam-admin" hidden>
+    <header class="subpage-header">
+      <div class="container subpage-header__inner">
+        <span class="subpage-header__title subpage-header__title--brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span>Examcamp</span>
+          <span class="brand-live-indicator" id="brand-live-indicator-live-exam-admin" hidden></span>
+        </span>
+        <div class="subpage-header__right">
+          <span class="icon-btn icon-btn--admin-active" aria-hidden="true" title="Admin panel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          </span>
+          <button type="button" class="icon-btn icon-btn--home" data-spa-nav="home" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn icon-btn--back" data-spa-nav="live-exam" aria-label="Back" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="subpage-main">
+      <div class="container">
+
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab is-active" data-admin-tab="campaigns" role="tab" aria-selected="true">Courses</button>
+          <button type="button" class="tab" data-admin-tab="questions" role="tab" aria-selected="false">Questions</button>
+          <button type="button" class="tab" data-admin-tab="results" role="tab" aria-selected="false">Results</button>
+          <button type="button" class="tab" data-admin-tab="subscribers" role="tab" aria-selected="false">Users</button>
+        </div>
+
+        <!-- ================= CAMPAIGNS TAB ================= -->
+        <section class="admin-tab-panel" id="admin-panel-campaigns">
+
+          <!-- ---- Subjects (Campaigns) ---- -->
+          <div class="admin-section-header">
+            <div>
+              <h2 class="text-h4">Subjects / courses</h2>
+                          </div>
+            <button type="button" class="btn btn-primary" id="admin-new-subject-btn">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>New Subject</span>
+            </button>
+          </div>
+
+          <div id="admin-subject-list">
+            <!-- populated by renderAdminSubjectList() — one card per subject,
+                 each containing its own live-exam list, a subject-scoped
+                 "New Live Exam" button, and Edit/Delete for the subject -->
+          </div>
+
+          <!-- New/Edit Subject form (collapsed by default) -->
+          <div class="card" id="admin-subject-form-card" hidden style="margin-top: var(--space-6);">
+            <div class="card__header">
+              <h3 class="text-h4" id="admin-subject-form-title">New subject</h3>
+              <button type="button" class="icon-btn" id="admin-subject-form-close" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+            <div class="config-grid">
+              <div>
+                <label class="form-label" for="admin-subject-name">Subject name</label>
+                <input type="text" class="form-control" id="admin-subject-name" placeholder="e.g. English Grammar" />
+              </div>
+              <div>
+                <label class="form-label" for="admin-subject-start">Course start date</label>
+                <input type="date" class="form-control" id="admin-subject-start" />
+              </div>
+              <div>
+                <label class="form-label" for="admin-subject-end">Course end date</label>
+                <input type="date" class="form-control" id="admin-subject-end" />
+              </div>
+            </div>
+                        <div style="display: flex; gap: var(--space-3);">
+              <button type="button" class="btn btn-primary" id="admin-subject-save-btn">Save Subject</button>
+              <button type="button" class="btn btn-secondary" id="admin-subject-cancel-btn">Cancel</button>
+            </div>
+          </div>
+
+          <!-- New/Edit Live Exam form (collapsed by default; opened from
+               a specific subject's "New Live Exam" button) -->
+          <div class="card" id="admin-exam-form-card" hidden style="margin-top: var(--space-6);">
+            <div class="card__header">
+              <h3 class="text-h4" id="admin-exam-form-title">New Live Exam</h3>
+              <button type="button" class="icon-btn" id="admin-exam-form-close" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+
+            <div class="config-grid">
+              <div>
+                <label class="form-label" for="admin-exam-subject">Subject</label>
+                <select class="form-control" id="admin-exam-subject">
+                  <!-- populated from centralExamState.subjects -->
+                </select>
+              </div>
+              <div>
+                <label class="form-label" for="admin-exam-topic">Topic</label>
+                <input type="text" class="form-control" id="admin-exam-topic" placeholder="e.g. Noun, Tense, Subject-Verb Agreement" />
+              </div>
+              <div>
+                <label class="form-label" for="admin-exam-language">Language</label>
+                <select class="form-control" id="admin-exam-language">
+                  <option value="en" selected>English</option>
+                  <option value="bn">বাংলা</option>
+                  <option value="en-bn">English + বাংলা</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" for="admin-exam-start">Start date &amp; time</label>
+                <input type="datetime-local" class="form-control" id="admin-exam-start" />
+              </div>
+              <div>
+                <label class="form-label" for="admin-exam-duration">Duration (minutes)</label>
+                <input type="number" class="form-control no-spinner" id="admin-exam-duration" min="5" step="5" value="60" />
+              </div>
+              <div>
+                <label class="form-label" for="admin-exam-marks">Marks per question</label>
+                <input type="number" class="form-control no-spinner" id="admin-exam-marks" min="0.5" step="0.5" value="1" />
+              </div>
+            </div>
+
+            <!-- Negative marking is no longer set per-exam here — it now
+                 always follows the single site-wide value in Settings →
+                 Exam Preferences → "Negative mark per wrong answer", the
+                 same value AI Mode / practice exams already use, so
+                 there's one source of truth everywhere instead of two. -->
+            <p class="form-hint" id="admin-exam-negative-mark-note" style="margin-bottom: var(--space-5);">
+              <button type="button" class="inline-link-btn" data-modal-open="settings-modal" data-settings-tab="exam-prefs">Settings → Exam Preferences</button>
+            </p>
+
+            <div class="card--tint-info" style="border-radius: var(--radius-md); padding: var(--space-4); margin-bottom: var(--space-5); border: 1px solid var(--color-info-border); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);">
+              <div>
+                <div style="font-weight: var(--font-weight-semibold); font-size: var(--font-size-small);">Questions attached</div>
+                <div class="text-small text-secondary" id="admin-exam-qcount">0 questions from Question Bank</div>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm" data-admin-tab-jump="questions">Manage Questions</button>
+            </div>
+
+            <div style="display: flex; gap: var(--space-3); margin-top: var(--space-6);">
+              <button type="button" class="btn btn-primary" id="admin-exam-save-btn">Save &amp; Schedule</button>
+              <button type="button" class="btn btn-secondary" id="admin-exam-cancel-btn">Cancel</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= QUESTIONS TAB (MCQ Builder) ================= -->
+        <section class="admin-tab-panel mcqp" id="admin-panel-questions" style="display: none;">
+          <div class="admin-section-header">
+            <div>
+              <h2 class="text-h4">Question builder</h2>
+            </div>
+            <select class="form-control" id="mcqp-exam-select" style="width: auto; min-width: 220px;">
+              <!-- populated: which live exam these questions belong to -->
+            </select>
+          </div>
+
+          <div id="mcqp-no-exam-msg" class="card" style="display:none;">
+            <p class="text-secondary text-small" style="padding: var(--space-4) 0; text-align:center;">No live exams yet - create one in the Courses tab first, then come back here to build its questions.</p>
+          </div>
+
+          <div id="mcqp-builder-root" class="mcqp-builder" style="display:none;">
+
+            <div class="mcqp-toprow">
+              <div class="mcqp-toprow__left">
+                <div class="mcqp-lang-switch" role="group" aria-label="Question paper language">
+                  <button type="button" class="mcqp-lang-switch__btn is-active" data-mcqp-lang="en">English</button>
+                  <button type="button" class="mcqp-lang-switch__btn" data-mcqp-lang="bn">বাংলা</button>
+                </div>
+              </div>
+              <div class="mcqp-toprow__actions">
+                <button type="button" class="mcqp-btn-push" id="mcqp-push-live-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><path d="M13 2L3 14h7l-1 8 11-14h-7l1-6z"/></svg>
+                  <span>PUSH LIVE</span>
+                </button>
+                <button type="button" class="btn btn-secondary" id="mcqp-import-practice-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><path d="M12 3v12M12 15l-4-4M12 15l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                  <span>Import</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="mcqp-ai-mode-btn">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  <span>AI Mode</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="mcqp-shell mcqp-shell--single">
+              <div class="mcqp-panel">
+                <div class="mcqp-questions-head">
+                  <h3 class="text-h4" style="margin:0;">Questions</h3>
+                  <span class="mcqp-questions-head__count" id="mcqp-question-count">0 questions</span>
+                </div>
+                <div id="mcqp-questions-list" class="mcqp2-questions-list"></div>
+                <button type="button" class="mcqp-add-more" id="mcqp-add-question-btn">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="18" height="18"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  Add Question Manually
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= RESULTS TAB ================= -->
+        <section class="admin-tab-panel" id="admin-panel-results" style="display: none;">
+          <div class="admin-section-header">
+            <div>
+              <h2 class="text-h4">Publish results</h2>
+                          </div>
+          </div>
+
+          <div class="live-admin-exam-list" id="admin-results-list">
+            <!-- populated by renderAdminResultsList() — completed/ended
+                 exams awaiting publish, plus already-published ones with
+                 an "Unpublish" / "Republish" action -->
+          </div>
+        </section>
+
+        <!-- ================= SUBSCRIBERS TAB ================= -->
+        <section class="admin-tab-panel" id="admin-panel-subscribers" style="display: none;">
+          <div class="subpage-summary">
+            <div class="card card--tint-primary subpage-summary__card">
+              <div class="subpage-summary__value" id="admin-sub-total">0</div>
+              <div class="subpage-summary__label">Total Users</div>
+            </div>
+            <div class="card card--tint-success subpage-summary__card">
+              <div class="subpage-summary__value" id="admin-sub-active">0</div>
+              <div class="subpage-summary__label">Active This Course</div>
+            </div>
+            <div class="card card--tint-warning subpage-summary__card">
+              <div class="subpage-summary__value" id="admin-sub-assistants">0</div>
+              <div class="subpage-summary__label">Assistant Admins</div>
+            </div>
+          </div>
+
+          <!-- Enrollment Requests: public "Enroll Now" popup submissions
+               awaiting review. Hidden entirely (via wrap's display:none)
+               whenever there are none. -->
+          <div id="admin-enroll-requests-wrap" style="display: none; margin-top: var(--space-8);">
+            <div class="admin-section-header">
+              <div>
+                <h2 class="text-h4">Enrollment Requests <span class="badge badge-warning" id="admin-enroll-requests-count">0</span></h2>
+                              </div>
+            </div>
+            <div class="card">
+              <div id="admin-enroll-requests-list">
+                <!-- populated by renderAdminEnrollmentRequests() -->
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-section-header" style="margin-top: var(--space-8);">
+            <div>
+              <h2 class="text-h4">Members</h2>
+                          </div>
+            <button type="button" class="btn btn-primary" id="admin-add-member-btn">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Add Member</span>
+            </button>
+          </div>
+
+          <!-- New Member form (collapsed by default; opened from the
+               "Add Member" button above). Manually filled — Name, Phone,
+               Email — instead of the old single-field browser prompt(). -->
+          <div class="card" id="admin-member-form-card" hidden style="margin-top: var(--space-6);">
+            <div class="card__header">
+              <h3 class="text-h4">New member</h3>
+              <button type="button" class="icon-btn" id="admin-member-form-close" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+            <div class="config-grid">
+              <div>
+                <label class="form-label" for="admin-member-name">Name</label>
+                <input type="text" class="form-control" id="admin-member-name" placeholder="e.g. Rahim Uddin" />
+              </div>
+              <div>
+                <label class="form-label" for="admin-member-phone">Phone number</label>
+                <input type="tel" class="form-control" id="admin-member-phone" placeholder="e.g. 01XXXXXXXXX" />
+              </div>
+              <div>
+                <label class="form-label" for="admin-member-email">Gmail address</label>
+                <input type="email" class="form-control" id="admin-member-email" placeholder="e.g. name@gmail.com" />
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: var(--space-1);">
+              <label class="form-label" style="display:flex; align-items:center; gap: var(--space-2); font-weight: var(--font-weight-normal);">
+                <input type="checkbox" id="admin-member-as-assistant" />
+                Add as Assistant Admin (can manage exams, questions, results, subscribers)
+              </label>
+            </div>
+            <div id="admin-member-subject-picker" class="member-subject-editor" style="display: none; border-top: none; padding-top: 0; margin-top: 0;">
+              <!-- populated when opening the form, listing current Subject Courses to enroll this member in -->
+            </div>
+                        <div style="display: flex; gap: var(--space-3);">
+              <button type="button" class="btn btn-primary" id="admin-member-save-btn">Save Member</button>
+              <button type="button" class="btn btn-secondary" id="admin-member-cancel-btn">Cancel</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="live-member-list" id="admin-member-list">
+              <!-- populated by renderAdminMemberList() -->
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div><!-- /view-live-exam-admin -->
+
+
+
+  <!-- ==========================================================
+       VIEW: HISTORY — reached from the "History" vertical
+       dashboard card.
+       ========================================================== -->
+  <div class="view" id="view-history" hidden>
+    <header class="subpage-header">
+      <div class="container subpage-header__inner">
+        <span class="subpage-header__title subpage-header__title--brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span data-i18n="brand.name">Examcamp</span>
+          <span class="brand-live-indicator" id="brand-live-indicator-history" hidden></span>
+        </span>
+        <div class="subpage-header__right">
+          <span class="subpage-header__page-label" data-i18n="nav.history">History</span>
+          <button type="button" class="icon-btn icon-btn--home" data-spa-nav="home" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn icon-btn--back" data-spa-nav="home" aria-label="Back" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="subpage-main">
+      <div class="container">
+        <!-- Two sources of exam history: Central Live Exam results
+             (published only, from centralExamState) and this student's
+             own self-practice exams (from getAllExamRecords()). -->
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab is-active" data-history-tab="live" role="tab" aria-selected="true"><svg class="tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-i18n="history.tab.live">Live Exam</span></button>
+          <button type="button" class="tab" data-history-tab="practice" role="tab" aria-selected="false"><svg class="tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span data-i18n="history.tab.practice">Practice Exams</span></button>
+        </div>
+
+        <section class="history-tab-panel" id="history-panel-live">
+          <div class="card">
+            <div class="record-list" id="history-live-list">
+              <!-- populated by renderHistoryPage() -->
+            </div>
+          </div>
+        </section>
+
+        <section class="history-tab-panel" id="history-panel-practice" style="display: none;">
+          <div class="card">
+            <div class="record-list" id="history-list">
+              <!-- populated by renderHistoryPage() -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div><!-- /view-history -->
+
+  <!-- ==========================================================
+       VIEW: PRACTICE — hub reached from the dashboard's "Practice"
+       vertical card (this replaced the old "History" card slot;
+       the History page above is still reachable from the "Exams"
+       quick-stat card on Home). 4 sub-feature cards: Practice
+       Panel, Highlights Question, Vocabulary Master, Current
+       Affairs. Only Practice Panel routes anywhere yet — the
+       subject/topic dropdown list, the Practice Mode runner (styled
+       like Exam Mode), and the Practice admin panel are separate
+       follow-up steps. Does not read or modify anything under
+       #view-live-exam / #view-live-exam-admin or their state.
+       ========================================================== -->
+  <div class="view" id="view-practice" hidden>
+    <header class="subpage-header">
+      <div class="container subpage-header__inner">
+        <span class="subpage-header__title subpage-header__title--brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span data-i18n="brand.name">Examcamp</span>
+          <span class="brand-live-indicator" id="brand-live-indicator-practice" hidden></span>
+        </span>
+        <div class="subpage-header__right">
+          <span class="subpage-header__page-label" data-i18n="practice.pageTitle">Practice</span>
+          <button type="button" class="icon-btn icon-btn--home" data-spa-nav="home" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn icon-btn--back" data-spa-nav="home" aria-label="Back" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+          <button type="button" class="icon-btn live-exam-admin-btn" id="practice-admin-entry" data-modal-open="admin-control-modal" aria-label="Admin Control" title="Admin Control">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="subpage-main">
+      <div class="container">
+        <div class="pp-category-list" id="pp-category-list">
+          <!-- populated by renderPracticeCategoryList() -->
+        </div>
+      </div>
+    </main>
+  </div><!-- /view-practice -->
+
+  <!-- ==========================================================
+       VIEW: PRACTICE SUBJECTS — one exam category's Subject/Topic
+       accordion (বিসিএস প্রিলিমিনারী, ব্যাংক প্রিলিমিনারী, ...),
+       reached by picking a category card in #view-practice. A real
+       separate view/history entry (not a hide/show toggle within
+       #view-practice) so the device Back button and the on-screen
+       back arrow both land on the category grid, matching how every
+       other drill-down in this app (e.g. Live Exam hub → its
+       sub-pages) already behaves.
+       ========================================================== -->
+  <div class="view" id="view-practice-subjects" hidden>
+    <header class="subpage-header">
+      <div class="container subpage-header__inner">
+        <span class="subpage-header__title subpage-header__title--brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span data-i18n="brand.name">Examcamp</span>
+          <span class="brand-live-indicator" id="brand-live-indicator-practice-subjects" hidden></span>
+        </span>
+        <div class="subpage-header__right">
+          <span class="subpage-header__page-label" id="pp-subjects-page-label">Practice</span>
+          <button type="button" class="icon-btn icon-btn--home" data-spa-nav="home" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn icon-btn--back" data-spa-nav="practice" aria-label="Back" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="subpage-main">
+      <div class="container">
+        <div class="pp-subjects-heading" id="pp-subjects-heading">
+          <!-- populated by renderPracticeSubjectList(): active category's icon + name -->
+        </div>
+        <div class="pp-subject-list" id="pp-subject-list">
+          <!-- populated by renderPracticeSubjectList() -->
+        </div>
+      </div>
+    </main>
+  </div><!-- /view-practice-subjects -->
+
+  <!-- ==========================================================
+       VIEW: PRACTICE MODE — one subject/topic's question set,
+       reached by picking a topic in Practice Panel. Visually
+       identical to Exam Mode (#view-exam): same header/layout/
+       question-card/option markup and CSS classes, reused as-is.
+       Differences from Exam Mode, per spec: no timer, no Submit —
+       instead a live Right/Wrong counter; answers reveal
+       correct/wrong + explanation immediately; a Back button exits
+       to Practice Panel; progress (last question reached) is saved
+       per subject+topic in practiceState so re-entering the same
+       topic resumes from where the student left off. Entirely its
+       own DOM ids / JS state (practiceModeState) — never touches
+       liveExamState, centralExamState, or #view-exam.
+       ========================================================== -->
+  <div class="view" id="view-practice-mode" hidden>
+    <header class="exam-header">
+      <div class="container">
+        <div class="exam-header__brand" id="pm-header-brand-group">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span class="brand-live-indicator" id="brand-live-indicator-practice-mode" hidden></span>
+          <div class="exam-meta">
+            <span class="exam-meta__subject" id="pm-header-subject">Subject</span>
+            <span class="exam-meta__topic" id="pm-header-topic">Topic</span>
+          </div>
+        </div>
+        <div class="exam-header__actions">
+          <div class="pm-score-pill" id="pm-score-pill">
+            <span class="pm-score-pill__item pm-score-pill__item--right"><span id="pm-right-count">0</span></span>
+            <span class="pm-score-pill__item pm-score-pill__item--wrong"><span id="pm-wrong-count">0</span></span>
+          </div>
+          <button class="icon-btn icon-btn--back" id="pm-back-btn" type="button" aria-label="Back" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobile-nav-strip" id="pm-mobile-nav-strip" aria-label="Jump to question"></div>
+
+    <main class="exam-layout">
+      <aside class="card question-nav" aria-label="Question navigator">
+        <div class="question-nav__legend">
+          <span><span class="legend-dot" style="background:var(--color-success)"></span><span data-i18n="common.correct">Correct</span></span>
+          <span><span class="legend-dot" style="background:var(--color-danger)"></span><span data-i18n="common.wrong">Wrong</span></span>
+          <span><span class="legend-dot" style="background:var(--color-border-strong)"></span><span data-i18n="common.unanswered">Unanswered</span></span>
+        </div>
+        <div class="question-nav__grid" id="pm-question-nav-grid"></div>
+      </aside>
+
+      <section class="question-stream-col">
+        <p class="exam-progress" id="pm-progress">Question 1 of 1</p>
+        <div class="question-stream" id="pm-question-stream"></div>
+      </section>
+    </main>
+  </div><!-- /view-practice-mode -->
+
+  <!-- ==========================================================
+       VIEW: PRACTICE ADMIN PANEL — content-authoring panel for the
+       Practice Panel feature. Deliberately reuses the exact same
+       markup/CSS/JS patterns as #view-live-exam-admin (Courses +
+       Questions tabs, admin-subject-card, mcqp-* Question Builder)
+       so it looks and behaves identically, but:
+       - only 2 tabs (Subjects, Questions) — no Results/Users tabs,
+         since Practice has no schedule or subscriber list to manage.
+       - the Subject form has no course start/end date fields, and
+         the Topic form has no start time/duration/marks/negative
+         marking fields — Practice topics are just a name, unlike a
+         scheduled Live Exam.
+       Writes go straight to practiceState (localStorage-only, same
+       as the rest of Practice) via PracticeMCQBuilder — a second
+       instance of the same createMCQBuilder() factory that powers
+       MCQBuilder above, so the Question Builder itself (rich-text
+       editor, layout picker, AI Mode, PUSH) is the identical code
+       running against a different data source. No Supabase calls
+       here yet — per spec, the database connects later.
+       ========================================================== -->
+  <div class="view" id="view-practice-admin" hidden>
+    <header class="subpage-header">
+      <div class="container subpage-header__inner">
+        <span class="subpage-header__title subpage-header__title--brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span>Examcamp</span>
+          <span class="brand-live-indicator" id="brand-live-indicator-practice-admin" hidden></span>
+        </span>
+        <div class="subpage-header__right">
+          <span class="icon-btn icon-btn--admin-active" aria-hidden="true" title="Admin panel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          </span>
+          <button type="button" class="icon-btn icon-btn--home" data-spa-nav="home" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn icon-btn--back" data-spa-nav="practice" aria-label="Back" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="subpage-main">
+      <div class="container">
+
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab is-active" data-pa-admin-tab="categories" role="tab" aria-selected="true">Categories</button>
+          <button type="button" class="tab" data-pa-admin-tab="subjects" role="tab" aria-selected="false">Subjects</button>
+          <button type="button" class="tab" data-pa-admin-tab="questions" role="tab" aria-selected="false">Questions</button>
+          <button type="button" class="tab" data-pa-admin-tab="agq" role="tab" aria-selected="false">AGQ</button>
+        </div>
+
+        <!-- ================= CATEGORIES TAB ================= -->
+        <!-- Exam Category = a card on the Practice Panel's top-level
+             screen (বিসিএস প্রিলিমিনারী / ব্যাংক প্রিলিমিনারী / ...).
+             CRUD here writes to practiceState.categories, which the
+             Practice Panel (renderPracticeCategoryList) and Statistics
+             page (renderStatsCategoryTabs/renderBcsPreliminaryStats)
+             already render dynamically — adding a category here is all
+             that's needed for both to pick it up. -->
+        <section class="admin-tab-panel" id="pa-admin-panel-categories">
+
+          <div class="admin-section-header pa-subjects-header">
+            <div>
+              <h2 class="text-h4">Categories</h2>
+            </div>
+            <button type="button" class="btn btn-primary" id="pa-admin-new-category-btn">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>New Category</span>
+            </button>
+          </div>
+
+          <div class="pp-subject-list" id="pa-admin-category-list">
+            <!-- populated by renderPracticeAdminCategoryList() -->
+          </div>
+        </section>
+
+        <!-- ================= SUBJECTS TAB ================= -->
+        <section class="admin-tab-panel" id="pa-admin-panel-subjects" style="display: none;">
+
+          <div class="admin-section-header pa-subjects-header">
+            <div>
+              <h2 class="text-h4">Subjects</h2>
+            </div>
+            <button type="button" class="btn btn-primary" id="pa-admin-new-subject-btn">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>New Subject</span>
+            </button>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-4);">
+            <label class="form-label" for="pa-admin-category-select">Exam category</label>
+            <select class="form-control" id="pa-admin-category-select" style="max-width: 320px;">
+              <!-- populated by renderPracticeAdminCategorySelect() —
+                   picks which category's Subjects/Topics are shown
+                   below (scoped via activePracticeCategoryId). -->
+            </select>
+          </div>
+
+          <div class="pp-subject-list" id="pa-admin-subject-list">
+            <!-- populated by renderPracticeAdminSubjectList() — one
+                 accordion card per subject (same open/close chevron
+                 pattern as the Practice Panel's pp-subject accordion),
+                 each containing its own topic rows, a subject-scoped
+                 "New Topic" button, and Edit/Delete for the subject.
+                 Edit forms for a subject or a topic now render inline
+                 inside that subject's own card instead of a shared
+                 form at the bottom of the page — see
+                 renderPracticeAdminSubjectList's inline-form handling
+                 below. -->
+          </div>
+        </section>
+
+        <!-- ================= QUESTIONS TAB (MCQ Builder) ================= -->
+        <section class="admin-tab-panel mcqp" id="pa-admin-panel-questions" style="display: none;">
+
+          <div id="pa-mcqp-no-exam-msg" class="card" style="display:none;">
+            <p class="text-secondary text-small" style="padding: var(--space-4) 0; text-align:center;">No topics yet - create a Subject and a Topic in the Subjects tab first, then come back here to build its questions.</p>
+          </div>
+
+          <div id="pa-mcqp-builder-root" class="mcqp-builder" style="display:none;">
+
+            <div class="mcqp-toprow">
+              <div class="mcqp-toprow__left">
+                <h3 class="mcqp-toprow__label" style="margin:0;">Questions</h3>
+                <div class="mcqp-lang-switch" role="group" aria-label="Question paper language">
+                  <button type="button" class="mcqp-lang-switch__btn is-active" data-mcqp-lang="en">English</button>
+                  <button type="button" class="mcqp-lang-switch__btn" data-mcqp-lang="bn">বাংলা</button>
+                </div>
+              </div>
+              <select class="form-control" id="pa-mcqp-subject-select" style="width: auto; min-width: 180px;" aria-label="Subject">
+                <!-- populated: subjects that have at least one topic -->
+              </select>
+              <select class="form-control" id="pa-mcqp-exam-select" style="width: auto; min-width: 180px;" aria-label="Topic">
+                <!-- populated: topics of the subject chosen in the dropdown before this one -->
+              </select>
+              <input type="text" class="form-control" id="pa-mcqp-subtopic" placeholder="Subtopic (optional)" list="pa-mcqp-subtopic-list" style="width: auto; min-width: 180px;" aria-label="Subtopic" />
+              <datalist id="pa-mcqp-subtopic-list"></datalist>
+              <div class="mcqp-toprow__actions">
+                <button type="button" class="mcqp-btn-push" id="pa-mcqp-push-live-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18"><path d="M13 2L3 14h7l-1 8 11-14h-7l1-6z"/></svg>
+                  <span>PUSH</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="pa-mcqp-ai-mode-btn">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  <span>AI Mode</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="mcqp-shell mcqp-shell--single">
+              <div class="mcqp-panel">
+                <div class="mcqp-questions-head">
+                  <h3 class="text-h4" style="margin:0;">Questions</h3>
+                  <span class="mcqp-questions-head__count" id="pa-mcqp-question-count">0 questions</span>
+                </div>
+                <div id="pa-mcqp-questions-list" class="mcqp2-questions-list"></div>
+                <button type="button" class="mcqp-add-more" id="pa-mcqp-add-question-btn">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="18" height="18"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  Add Question Manually
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= AGQ (Auto Generation Question) TAB =================
+             Embedded from the standalone AGQ admin mock. Wrapped in
+             .agq-embed so every AGQ class (.card, .btn, .toggle, .chip,
+             etc.) resolves only to the scoped CSS added in <head> and
+             never collides with the site's own same-named components.
+             AGQ's own navbar/theme-toggle were dropped on purpose — this
+             panel now lives inside Practice Admin's existing header and
+             follows the site's own light/dark theme automatically. -->
+        <section class="admin-tab-panel agq-embed" id="pa-admin-panel-agq" style="display: none;">
+<div class="agq-container">
+
+  <!-- ================= TABS ================= -->
+  <div class="agq-tabs">
+    <button class="agq-tab active" data-tab="control">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>
+      <span data-i18n="agq.tab.control">Control</span>
+    </button>
+    <button class="agq-tab" data-tab="queue">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span data-i18n="agq.tab.queue">Review</span>
+      <span class="tab-count" id="queueTabCount">3</span>
+    </button>
+    <button class="agq-tab" data-tab="history">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>
+      <span data-i18n="agq.tab.history">History</span>
+    </button>
+  </div>
+
+  <!-- ================= PANEL: CONTROL ================= -->
+  <div class="agq-panel active" id="panel-control">
+
+    <!-- Master switch + Progress overview: one card, two sections -->
+    <div class="card control-summary-card">
+      <div class="master-switch-row">
+        <div class="master-switch-info">
+          <span class="status-dot on" id="statusDot"></span>
+          <strong id="statusHeadline" data-i18n="agq.control.autoGeneration">Auto Generation</strong>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="masterToggle" checked />
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+
+      <div class="card-header control-summary-divider">
+        <div>
+          <h3 data-i18n="agq.control.progressOverview">Progress Overview</h3>
+        </div>
+      </div>
+
+      <div class="progress-grid" style="padding-top: var(--space-4);">
+        <div class="progress-stat">
+          <div class="label" data-i18n="agq.control.todaysBatch">Today's Batch</div>
+          <div class="value"><span id="agqTodaysBatchDone">4</span> <small>/ <span id="agqTodaysBatchTotal">4</span> <span data-i18n="agq.control.completed">completed</span></small></div>
+        </div>
+        <div class="progress-stat">
+          <div class="label" data-i18n="agq.control.totalBatches">Total Batches</div>
+          <div class="value"><span id="agqTotalBatches">5,138</span> <small data-i18n="agq.control.batches">batches</small></div>
+        </div>
+        <div class="progress-stat">
+          <div class="label" data-i18n="agq.control.totalQuestionsAdded">Total Questions Added</div>
+          <div class="value"><span id="agqTotalQuestionsAdded">128,450</span> <small data-i18n="agq.control.questions">questions</small></div>
+        </div>
+        <div class="progress-stat">
+          <div class="label" data-i18n="agq.control.pendingReview">Pending Review</div>
+          <div class="value"><span id="agqPendingReview">3</span> <small data-i18n="agq.control.batches">batches</small></div>
+        </div>
+      </div>
+
+      <!-- Manual trigger for one generation cycle — the same code path
+           the Worker's cron job runs every 2 hours (see worker.js
+           runOneGenerationCycle), exposed here so the admin can test or
+           top up the queue without waiting for the next scheduled run. -->
+      <div class="control-summary-divider" style="padding-top: var(--space-4);">
+        <button type="button" class="btn btn-outline btn-sm" id="agqGenerateNowBtn" style="width: 100%;">
+          <span data-i18n="agq.control.generateNow">Generate Now (one batch)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Exam category scope: AGQ automation runs against one category
+         at a time (activePracticeCategoryId) — same as the Subjects/
+         Questions tabs. Hidden entirely when there's only one category,
+         same threshold as renderPracticeAdminCategorySelect(). -->
+    <div class="card">
+      <div class="form-group" id="agq-category-select-group" style="margin-bottom: 0;">
+        <label class="form-label" for="agq-category-select" data-i18n="agq.categorySelect.label">Exam category</label>
+        <select class="form-control" id="agq-category-select" style="max-width: 320px;">
+          <!-- populated by renderAgqCategorySelect() -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Subject order -->
+    <div class="card">
+      <div class="card-header card-header--row">
+        <div>
+          <h3 data-i18n="agq.subjectOrder.title">Subject Order</h3>
+          <!-- যে ক্রমে সাবজেক্টগুলো কভার হবে — বর্তমান অবস্থান হাইলাইট করা -->
+        </div>
+        <button class="btn btn-ghost btn-sm" id="reorderBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span data-i18n="agq.subjectOrder.reorder">Reorder</span>
+        </button>
+      </div>
+      <div class="field-group" style="padding-top: var(--space-4);">
+        <div class="subject-order-list" id="subjectOrderList">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Per-topic target count -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 data-i18n="agq.topicTarget.title">Topic-wise Target</h3>
+          <!-- একটি নির্দিষ্ট সাবজেক্টের নির্দিষ্ট টপিকে কতগুলো প্রশ্ন দরকার তা ঠিক করে দিন -->
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-row field-row--triple">
+          <div>
+            <label data-i18n="agq.topicTarget.subject">Subject</label>
+            <select class="select-input" id="targetSubjectSelect" style="max-width:100%;"></select>
+          </div>
+          <div>
+            <label data-i18n="agq.topicTarget.topic">Topic</label>
+            <select class="select-input" id="targetTopicSelect" style="max-width:100%;"></select>
+          </div>
+          <div>
+            <label data-i18n="agq.topicTarget.questionLanguage">Question Language</label>
+            <!-- অপশন মার্কার ক/খ/গ/ঘ নাকি A/B/C/D তা এই সেটিং ঠিক করবে — বাংলা / বাংলা+English
+                 নির্বাচনে ক, খ, গ, ঘ হবে; English নির্বাচনে A, B, C, D হবে — রিভিউ কিউ, এডিটর
+                 প্যানেল ও প্র্যাকটিস মোড, তিন জায়গাতেই। -->
+            <select class="select-input" id="topicTargetLangSelect" style="max-width:100%;">
+              <option value="bn" selected>বাংলা</option>
+              <option value="en">English</option>
+              <option value="en-bn">বাংলা + English</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="topic-target-controls">
+            <div class="stepper" id="topicTargetStepper">
+              <button type="button" id="topicTargetMinus">−</button>
+              <div class="stepper-value" id="topicTargetValue">200</div>
+              <button type="button" id="topicTargetPlus">+</button>
+            </div>
+            <button class="btn btn-primary" id="setTopicTargetBtn">
+              <span data-i18n="agq.topicTarget.setTarget">+ Set Target</span>
+            </button>
+          </div>
+          <!-- প্রতি ব্যাচে ২৫টি প্রশ্ন ধরে — এই টপিক সম্পূর্ণ করতে আনুমানিক ১০টি ব্যাচ চলবে (6 ঘন্টা ফ্রিকোয়েন্সিতে প্রায় ২.৫ দিন)। -->
+          <p class="field-hint" id="topicTargetPreview" style="display:none;"></p>
+          <!-- AI বর্তমানে এই সাবজেক্ট-টপিকের ওপর কাজ করলে দেখানো হয় — শেষ না হওয়া পর্যন্ত নতুন টার্গেট সেট করা যাবে না -->
+          <p class="field-hint gen-locked-hint" id="topicTargetLockedHint" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg> <span data-i18n="agq.topicTarget.aiWorkingOnTopic">AI is currently working on this topic</span></p>
+        </div>
+      </div>
+      <div class="section-label" style="padding-top:0;" data-i18n="agq.topicTarget.assignedTargets">Assigned Targets</div>
+      <div class="topic-target-list" id="topicTargetList"><!-- populated by JS --></div>
+    </div>
+
+    <!-- Generation settings -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 data-i18n="agq.generation.title">Generation Settings</h3>
+          <!-- ব্যাচের আকার, ফ্রিকোয়েন্সি ও প্রশ্নের ধরন -->
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row generation-controls-row">
+          <div class="generation-control">
+            <label data-i18n="agq.generation.questionsPerBatch" style="font-size: 0.78rem;">Questions per Batch</label>
+            <div class="stepper">
+              <button type="button" id="batchMinus">−</button>
+              <div class="stepper-value" id="batchSizeValue">25</div>
+              <button type="button" id="batchPlus">+</button>
+            </div>
+            <!-- কম সংখ্যা (২০-৩০) ধীরে কিন্তু নিরাপদে চলে — কোটা ও কোয়ালিটি দুটোই সুরক্ষিত থাকে। -->
+          </div>
+
+          <!-- IMPORTANT: this does NOT change how often the Edge
+               Function wakes up — that's a fixed pg_cron schedule
+               (every 2 hours, see supabase/migrations/0003_agq_cron.sql),
+               which can't be read or rewritten from here at runtime.
+               What this picker actually controls is a self-throttle
+               inside runOneGenerationCycle(): when pg_cron fires every
+               2h, the Edge Function only generates a new batch if at
+               least this many hours have passed since the last one. So
+               "Every 1 hour" can only ever make generation SLOWER than
+               2h feels (it just means "don't skip a tick"; the real
+               ceiling is still 2h) — picking 1h behaves identically to
+               2h. "Every 2 hours" is the default because it's the only
+               value that's actually true out of the box; a shorter
+               cadence would need the pg_cron migration's schedule
+               changed and re-applied, not just this dropdown. "Every
+               3/4/6 hours" genuinely slow things down below the cron's
+               own cadence. See DEFAULT_AGQ_CONFIG.generationFrequencyHours
+               in functions/api/index.ts for the full explanation. -->
+          <div class="generation-control">
+            <label data-i18n="agq.generation.frequencyPerBatch" style="font-size: 0.78rem;">Frequency/Batch</label>
+            <select class="select-input" id="frequencySelect">
+              <option value="1" data-i18n="agq.generation.every1h">Every 1 hours</option>
+              <option value="2" selected data-i18n="agq.generation.every2h">Every 2 hours (actual cron interval)</option>
+              <option value="3" data-i18n="agq.generation.every3h">Every 3 hours</option>
+              <option value="4" data-i18n="agq.generation.every4h">Every 4 hours</option>
+              <option value="6" data-i18n="agq.generation.every6h">Every 6 hours</option>
+            </select>
+          </div>
+
+          <div class="generation-control">
+            <label data-i18n="agq.generation.questionTarget" style="font-size: 0.78rem;">Question Target</label>
+            <!-- প্রতি [ফ্রিকোয়েন্সি/ব্যাচ] অন্তর, [প্রতি ব্যাচে প্রশ্ন সংখ্যা]টি করে, মোট এই
+                 সংখ্যক প্রশ্ন তৈরি হয়ে সংশ্লিষ্ট সাবজেক্ট/টপিকের রিভিউ কিউতে জমা হবে। -->
+            <input type="number" class="select-input" id="targetInput" placeholder="100" min="0" step="1000" inputmode="numeric" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <label data-i18n="agq.generation.questionTypes">Question Types (multiple selectable)</label>
+          <div class="chip-group" id="questionTypeChipGroup">
+            <label class="chip">
+              <input type="checkbox" checked data-question-type="general" />
+              <span class="chip-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <span data-i18n="agq.generation.typeGeneral">General Questions</span>
+            </label>
+            <label class="chip">
+              <input type="checkbox" checked data-question-type="bcsPast" />
+              <span class="chip-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <span data-i18n="agq.generation.typeBcsPast">BCS Preli — Past Year Questions</span>
+            </label>
+            <label class="chip">
+              <input type="checkbox" checked data-question-type="bcsImportant" />
+              <span class="chip-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <span data-i18n="agq.generation.typeBcsImportant">BCS Preli — Important Questions</span>
+            </label>
+            <label class="chip">
+              <input type="checkbox" checked data-question-type="bank" />
+              <span class="chip-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <span data-i18n="agq.generation.typeBank">Bank Preli Questions</span>
+            </label>
+            <label class="chip">
+              <input type="checkbox" checked data-question-type="ntrca" />
+              <span class="chip-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <span data-i18n="agq.generation.typeNtrca">NTRCA & Primary Teacher Registration</span>
+            </label>
+            <label class="chip">
+              <input type="checkbox" checked data-question-type="govtOther" />
+              <span class="chip-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <span data-i18n="agq.generation.typeGovtOther">Other Government Job Questions</span>
+            </label>
+            <label class="chip">
+              <input type="checkbox" checked data-question-type="varsity" />
+              <span class="chip-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              <span data-i18n="agq.generation.typeVarsity">University Admission (BCS-relevant)</span>
+            </label>
+          </div>
+          <!-- সব সাবজেক্ট/টপিকে এই ধরনগুলো ঘুরিয়ে-ফিরিয়ে জেনারেট হবে — নিচে প্রতিটি টপিকের জন্য আলাদাভাবে লক্ষ্যমাত্রা ঠিক করা যাবে। -->
+        </div>
+        <div class="field-row" style="padding-top:0;">
+          <button type="button" class="btn btn-primary btn-sm" id="saveGenerationSettingsBtn" data-i18n="agq.generation.save">Save Generation Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Duplicate & QC info card: hidden from view per design request,
+         but left in the DOM (display:none) so its underlying function
+         (duplicate protection / AI quality check on the backend) is
+         unaffected — this card was purely informational text anyway. -->
+    <div class="card" style="display:none;">
+      <div class="card-body">
+        <div>
+          <h3 style="margin:0 0 4px; font-size: 0.94rem; font-weight: 900;" data-i18n="agq.qc.title">Duplicate Protection & Quality Check</h3>
+          <p style="margin:0; font-size: 0.82rem; color: var(--color-text-secondary); line-height:1.6;" data-i18n="agq.qc.desc">Every new question is checked against previous questions, and AI automatically verifies answer clarity. Every generated batch is submitted to the review queue by subject and topic.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= PANEL: REVIEW QUEUE ================= -->
+  <div class="agq-panel" id="panel-queue">
+
+    <div class="queue-toolbar-left" id="queueToolbarLeft"><strong id="queueSubjectCount">3</strong><span data-i18n="agq.queue.subjects">subjects,</span> <strong id="queueVisibleCount">3</strong><span data-i18n="agq.queue.topicsWaiting">topics are waiting for review</span></div>
+
+    <div class="mass-action-bar">
+      <div class="mass-select-row">
+        <label class="mass-select-all">
+          <input type="checkbox" id="selectAllBatches" />
+          <span data-i18n="agq.queue.selectAllTopics">Select all topics</span>
+        </label>
+        <span class="mass-selected-count" id="massSelectedCount" style="display:none;">0<span data-i18n="agq.queue.selected">selected</span></span>
+      </div>
+      <div class="mass-btns">
+        <button class="btn btn-success btn-sm" id="massApproveBtn" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Massive Push
+        </button>
+        <button class="btn btn-danger btn-sm" id="massDeleteBtn" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          Massive Delete
+        </button>
+      </div>
+    </div>
+
+    <div id="queueList"><!-- populated by JS --></div>
+
+    <div class="empty-state" id="queueEmptyState" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <p data-i18n="agq.queue.emptyTitle">Review queue is empty, all batches processed</p>
+    </div>
+
+  </div>
+
+  <!-- ================= PANEL: HISTORY ================= -->
+  <!-- Same subject -> topic -> questions accordion as the Review Queue,
+       only read-only: each topic row here carries its Approve/Reject
+       outcome instead of action buttons. -->
+  <div class="agq-panel" id="panel-history">
+
+    <div class="queue-toolbar-left"><strong id="historySubjectCount">0</strong><span data-i18n="agq.queue.subjects">subjects,</span> <strong id="historyTopicCount">0</strong><span data-i18n="agq.history.topicsProcessed">topics have been processed</span></div>
+
+    <div id="historyList"><!-- populated by JS --></div>
+
+    <div class="empty-state" id="historyEmptyState" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>
+      <p data-i18n="agq.history.emptyTitle">No batch has been approved or rejected yet</p>
+    </div>
+
+  </div>
+
+</div><!-- /container -->
+
+<!-- ================= REORDER MODAL ================= -->
+<div class="modal-backdrop" id="reorderModal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h3 data-i18n="agq.reorderModal.title">Reorder Subjects</h3>
+      <button class="modal-close" id="closeReorderModal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="section-label" data-i18n="agq.reorderModal.hint">Use the ↑ / ↓ buttons to move a subject</div>
+    <div class="field-group" style="padding-top:0;">
+      <div class="subject-order-list" id="modalSubjectList"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-block" id="cancelReorderBtn" data-i18n="agq.reorderModal.cancel">Cancel</button>
+      <button class="btn btn-primary btn-block" id="saveReorderBtn" data-i18n="agq.reorderModal.save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= INTERNAL MCQ EDITOR MODAL ================= -->
+<div class="modal-backdrop" id="editQuestionModal">
+  <div class="modal-sheet modal-sheet--wide">
+    <div class="modal-header">
+      <h3 data-i18n="agq.editModal.title">Edit Question</h3>
+      <button class="modal-close" id="closeEditModal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="field-group" style="padding-top: var(--space-4);">
+      <!-- Rich single-question editor — same mcqp2-qcard markup/behavior as
+           Live Exam Admin's Question tab (createMCQBuilder), just rendered
+           for exactly one AGQ question instead of a whole question list.
+           See buildAgqEditorCard() / initAgqEditorToolbar() near queueState. -->
+      <div class="mcq-editor-card">
+        <div class="mcq-editor-card__head">
+          <strong id="editQuestionNum"><span data-i18n="agq.queue.questionNum">Question</span> 1</strong>
+          <span class="type-tag" id="editQuestionType">BCS</span>
+        </div>
+        <div class="mcq-editor-card__body" id="agqEditorCardBody"><!-- populated by JS: buildAgqEditorCard() --></div>
+        <div class="mcq-editor-meta-row">
+          <span data-i18n="agq.editModal.subject">Subject:</span> <b id="editMetaSubject">-</b>
+          <span data-i18n="agq.editModal.topic">Topic:</span> <b id="editMetaTopic">-</b>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="deleteQuestionBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        <span data-i18n="agq.editModal.delete">Delete</span>
+      </button>
+      <button class="btn btn-ghost btn-block" id="cancelEditBtn" data-i18n="agq.editModal.cancel">Cancel</button>
+      <button class="btn btn-primary btn-block" id="saveEditBtn" data-i18n="agq.editModal.save">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+        </section>
+
+      </div>
+    </main>
+  </div><!-- /view-practice-admin -->
+
+  <!-- ==========================================================
+       VIEW: STATISTICS OVERVIEW — reached from the "Statistics"
+       vertical dashboard card and the "Avg. Score" / "Questions"
+       horizontal quick-stat cards. This is the all-time analytics
+       summary; it's distinct from #view-stats, which shows the
+       review/breakdown for one single completed exam.
+       ========================================================== -->
+  <div class="view" id="view-statistics" hidden>
+    <header class="subpage-header">
+      <div class="container subpage-header__inner">
+        <span class="subpage-header__title subpage-header__title--brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span data-i18n="brand.name">Examcamp</span>
+          <span class="brand-live-indicator" id="brand-live-indicator-statistics" hidden></span>
+        </span>
+        <div class="subpage-header__right">
+          <span class="subpage-header__page-label" data-i18n="nav.statistics">Statistics</span>
+          <button type="button" class="icon-btn icon-btn--home" data-spa-nav="home" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn icon-btn--back" data-spa-nav="home" aria-label="Back" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="subpage-main">
+      <div class="container">
+        <!-- Two sources of stats, matching the History page: Central Live
+             Exam results (published only) and this student's own
+             self-practice exams. Each tab gets its own Exams Taken /
+             Avg. Score / Questions summary. -->
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab is-active" data-stats-tab="practice" role="tab" aria-selected="true"><svg class="tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span data-i18n="stats.tab.practice">Practice Exam</span></button>
+          <button type="button" class="tab" data-stats-tab="live" role="tab" aria-selected="false"><svg class="tab__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-i18n="history.tab.live">Live Exam</span></button>
+        </div>
+
+        <section class="stats-tab-panel" id="stats-panel-practice">
+          <div class="stats-overview-grid">
+            <div class="stats-overview-card">
+              <div class="stats-overview-card__label" data-i18n="stats.overview.examsTaken">Exams Taken</div>
+              <div class="stats-overview-card__value" id="stats-overview-practice-exams">0</div>
+              <div class="stats-overview-card__trend" data-i18n="stats.overview.allPractice">All Practice Exams</div>
+            </div>
+            <div class="stats-overview-card">
+              <div class="stats-overview-card__label" data-i18n="stats.overview.avgScore">Avg. Score</div>
+              <div class="stats-overview-card__value" id="stats-overview-practice-avg">0%</div>
+              <div class="stats-overview-card__trend" data-i18n="stats.overview.acrossPractice">Across all Practice Exams</div>
+            </div>
+            <div class="stats-overview-card">
+              <div class="stats-overview-card__label" data-i18n="stats.overview.questions">Questions</div>
+              <div class="stats-overview-card__value" id="stats-overview-practice-questions">0</div>
+              <div class="stats-overview-card__trend" data-i18n="stats.overview.acrossPractice">Across all Practice Exams</div>
+            </div>
+          </div>
+
+          <!-- BCS Preliminary: Practice Panel activity broken down by subject
+               (pie chart) and, per subject, by topic (bar chart on expand).
+               Reads the active category's subjects/progress — the same data
+               source the Practice Panel hub itself uses, so Subject/Topic
+               here always matches what's actually in the Practice page.
+
+               The category dropdown (which Practice Panel category — বিসিএস
+               প্রিলিমিনারী / ব্যাংক প্রিলিমিনারী / ...) lives INSIDE this
+               card's own header now, standing in for the title, instead of
+               floating above as its own separate card — one merged card
+               reads better than two stacked ones. Populated by
+               renderStatsCategoryTabs(). Hidden under a single category
+               (see that function), in which case the plain-text title
+               below takes over instead. -->
+          <div class="card" id="bcs-prelim-stats-card">
+            <div class="card__header">
+              <div class="stats-category-dropdown" id="stats-category-dropdown" hidden>
+                <button type="button" class="stats-category-dropdown__trigger" id="stats-category-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="stats-category-dropdown__trigger-icon" id="stats-category-dropdown-trigger-icon"></span>
+                  <span class="stats-category-dropdown__trigger-text">
+                    <span class="stats-category-dropdown__trigger-name" id="stats-category-dropdown-trigger-name"></span>
+                    <span class="text-muted" style="font-size: var(--font-size-caption); display:block;" data-i18n="stats.bcsPrelim.subtitle">Practice Panel activity by subject</span>
+                  </span>
+                  <svg class="stats-category-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="stats-category-dropdown__panel" id="stats-category-dropdown-panel" role="listbox"></div>
+              </div>
+              <div id="bcs-prelim-stats-title-static">
+                <h2 class="text-h4" id="bcs-prelim-stats-title" style="margin-bottom: 2px;">BCS Preliminary</h2>
+                <span class="text-muted" style="font-size: var(--font-size-caption);" data-i18n="stats.bcsPrelim.subtitle">Practice Panel activity by subject</span>
+              </div>
+              <!-- Hidden from students by request (UI no longer shows a
+                   "Demo data" badge), but kept in the DOM — still toggled
+                   by renderBcsPreliminaryStats() below — so a developer
+                   inspecting this page can tell real activity apart from
+                   the seeded/demo numbers via devtools (data-demo-badge
+                   attr) even though nothing is shown on screen. See the
+                   isDemo comment above renderBcsPreliminaryStats(). -->
+              <span class="badge badge-warning" id="bcs-prelim-demo-badge" data-i18n="stats.bcsPrelim.demoBadge" data-demo-badge hidden style="display:none !important;">Demo data</span>
+            </div>
+            <div id="bcs-prelim-stats-body">
+              <!-- populated by renderBcsPreliminaryStats() -->
+            </div>
+          </div>
+        </section>
+
+        <section class="stats-tab-panel" id="stats-panel-live" style="display: none;">
+          <div class="stats-overview-grid">
+            <div class="stats-overview-card">
+              <div class="stats-overview-card__label" data-i18n="stats.overview.examsTaken">Exams Taken</div>
+              <div class="stats-overview-card__value" id="stats-overview-live-exams">0</div>
+              <div class="stats-overview-card__trend" data-i18n="stats.overview.allLive">All Live Exams</div>
+            </div>
+            <div class="stats-overview-card">
+              <div class="stats-overview-card__label" data-i18n="stats.overview.avgScore">Avg. Score</div>
+              <div class="stats-overview-card__value" id="stats-overview-live-avg">0%</div>
+              <div class="stats-overview-card__trend" data-i18n="stats.overview.acrossLive">Across all Live Exams</div>
+            </div>
+            <div class="stats-overview-card">
+              <div class="stats-overview-card__label" data-i18n="stats.overview.questions">Questions</div>
+              <div class="stats-overview-card__value" id="stats-overview-live-questions">0</div>
+              <div class="stats-overview-card__trend" data-i18n="stats.overview.acrossLive">Across all Live Exams</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card__header">
+              <h2 class="text-h4" data-i18n="stats.recentResultsLive">Recent results</h2>
+            </div>
+            <div class="record-list" id="stats-recent-live-list">
+              <!-- populated by renderStatisticsPage() -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div><!-- /view-statistics -->
+
+  <div class="modal-overlay" id="settings-modal" aria-hidden="true">
+    <div class="modal modal--lg" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+      <div class="modal__header">
+        <h2 id="settings-modal-title" class="text-h3" data-i18n="settings.title">Settings</h2>
+        <button type="button" class="icon-btn" data-modal-close aria-label="Close settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="settings-modal__tabs-wrap" data-tabs-wrapper>
+        <div class="modal__body settings-modal__body">
+
+          <!-- ============ APPEARANCE ============ -->
+          <div class="settings-section" data-tab-panel="appearance">
+            <div class="settings-section__head"><svg class="settings-section__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg><h3 class="settings-section__title" data-i18n="settings.tab.appearance">Appearance</h3></div>
+            <!-- Theme is controlled from the single dynamic icon button in the
+                 navbar now (sun/moon/device, cycles + animates on click), so
+                 the old three-way Light/Dark/System row was removed here to
+                 avoid a second, redundant control. -->
+            <div class="settings-field">
+              <p class="form-label" data-i18n="settings.appearance.language">Language</p>
+                            <div class="segmented" role="group" aria-label="Language" style="width: fit-content;">
+                <button type="button" class="segmented__option" data-lang-option="en" aria-pressed="false">EN</button>
+                <button type="button" class="segmented__option" data-lang-option="bn" aria-pressed="false" lang="bn">বাংলা</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ AI CONFIGURATION ============ -->
+          <div class="settings-section" data-tab-panel="ai-config">
+            <div class="settings-section__head"><svg class="settings-section__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" stroke-linejoin="round"/></svg><h3 class="settings-section__title" data-i18n="settings.tab.aiConfig">AI Configuration</h3></div>
+            <div class="settings-field">
+              <label class="form-label" for="gemini-api-key" data-i18n="settings.ai.apiKey">Gemini API Key</label>
+              <div class="input-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="gemini-api-key"
+                  placeholder="Enter your Gemini API key"
+                  data-i18n-placeholder="settings.ai.apiKeyPlaceholder"
+                  autocomplete="off"
+                  spellcheck="false"
+                  style="padding-right: 44px;"
+                />
+                <button type="button" class="input-group__trailing-btn" id="toggle-api-key-visibility" aria-label="Show API key" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+              </div>
+              <a class="form-hint" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" data-i18n="settings.ai.getApiKeyLink">Get free Gemini API key</a>
+            </div>
+
+            <div class="settings-field">
+              <label class="form-label" for="gemini-model-select" data-i18n="settings.ai.model">Model</label>
+              <select class="form-control" id="gemini-model-select">
+                <option value="" data-i18n="settings.ai.modelPlaceholder">Select a model…</option>
+              </select>
+            </div>
+          </div>
+
+
+          <!-- ============ EXAM PREFERENCES ============ -->
+          <div class="settings-section" data-tab-panel="exam-prefs">
+            <div class="settings-section__head"><svg class="settings-section__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 8h7M9 11.5h7"/></svg><h3 class="settings-section__title" data-i18n="settings.tab.examPrefs">Exam Preferences</h3></div>
+            <div class="settings-field">
+              <label class="form-label" for="default-difficulty-select" data-i18n="settings.exam.defaultDifficulty">Default difficulty</label>
+              <select class="form-control" id="default-difficulty-select">
+                <option value="easy" data-i18n="common.easy">Easy</option>
+                <option value="medium" selected data-i18n="common.medium">Medium</option>
+                <option value="hard" data-i18n="common.hard">Hard</option>
+              </select>
+            </div>
+
+            <div class="settings-field">
+              <label class="form-label" for="default-language-select" data-i18n="settings.exam.defaultLanguage">Default exam language</label>
+              <select class="form-control" id="default-language-select">
+                <option value="en" data-i18n="common.langEnglish">English</option>
+                <option value="bn" data-i18n="common.langBengali">বাংলা</option>
+                <option value="en-bn" selected data-i18n="common.langMixed">English + বাংলা</option>
+              </select>
+            </div>
+
+            <div class="settings-field">
+              <label class="form-label" for="default-duration-select" data-i18n="settings.exam.defaultDuration">Default duration</label>
+              <select class="form-control" id="default-duration-select">
+                <option value="10" data-i18n="common.min10">10 minutes</option>
+                <option value="20" data-i18n="common.min20">20 minutes</option>
+                <option value="30" data-i18n="common.min30">30 minutes</option>
+                <option value="60" selected data-i18n="common.min60">60 minutes</option>
+                <option value="90" data-i18n="common.min90">90 minutes</option>
+                <option value="120" data-i18n="common.min120">120 minutes</option>
+              </select>
+            </div>
+
+            <div class="settings-field settings-field--row">
+              <div>
+                <p class="form-label" style="margin-bottom: var(--space-1);" data-i18n="home.aiMode.negativeMarkLabel">Negative Mark</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="negative-mark-toggle" checked />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+              </label>
+            </div>
+
+            <div class="settings-field">
+              <label class="form-label" for="negative-mark-value-select" data-i18n="settings.exam.negativeMarkValue">Negative mark per wrong answer</label>
+              <select class="form-control" id="negative-mark-value-select">
+                <option value="0.25" selected data-i18n="home.aiMode.negativeMark025">0.25</option>
+                <option value="0.5" data-i18n="home.aiMode.negativeMark050">0.50</option>
+              </select>
+                          </div>
+
+            <div class="settings-field settings-field--row">
+              <div>
+                <p class="form-label" style="margin-bottom: var(--space-1);" data-i18n="settings.exam.autosave">Auto-save progress</p>
+                              </div>
+              <label class="toggle">
+                <input type="checkbox" id="autosave-toggle" checked />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+              </label>
+            </div>
+
+            <div class="settings-field settings-field--row">
+              <div>
+                <p class="form-label" style="margin-bottom: var(--space-1);" data-i18n="settings.exam.answerKey">Show answer key after submit</p>
+                              </div>
+              <label class="toggle">
+                <input type="checkbox" id="answer-key-toggle" checked />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <span class="text-caption text-muted" id="settings-save-note" aria-live="polite"></span>
+        <button type="button" class="btn btn-outline" data-modal-close data-i18n="common.close">Close</button>
+        <button type="button" class="btn btn-primary" id="settings-save-btn" data-i18n="settings.save">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       VIEW: GENERATING (was exam-generator.html)
+       ========================================================== -->
+  <div class="view" id="view-generating" hidden>
+    <div class="generator-screen">
+      <div class="card generator-card">
+        <div class="generator-loading" id="generator-loading">
+          <div class="spinner" role="status" aria-label="Generating exam"></div>
+          <h1 id="generator-title" data-i18n="generator.title">Generating your exam…</h1>
+          <p id="generator-subtitle" data-i18n="generator.subtitle">Hope you will perform better</p>
+        </div>
+        <div class="generator-error" id="generator-error">
+          <h1 data-i18n="generator.errorTitle">Couldn't generate the exam</h1>
+          <p id="generator-error-message" class="text-muted"></p>
+          <div class="generator-actions">
+            <button class="btn btn-primary" id="retry-btn" type="button" data-i18n="generator.retry">Try Again</button>
+            <button class="btn btn-outline" id="sample-btn" type="button" data-i18n="generator.useSample">Use Sample Questions</button>
+            <button class="btn btn-ghost" id="generator-back-btn" type="button" data-i18n="generator.backHome">Back to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       VIEW: LIVE EXAM (was live-exam.html)
+       ========================================================== -->
+  <div class="view" id="view-exam" hidden>
+    <header class="exam-header">
+      <div class="container">
+        <div class="exam-header__brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span class="brand-live-indicator" id="brand-live-indicator-exam" hidden></span>
+        </div>
+        <div class="exam-meta">
+          <span class="exam-meta__subject" id="header-subject">Subject</span>
+          <span class="exam-meta__topic" id="header-topic">Topic</span>
+        </div>
+        <div class="exam-header__actions">
+          <button class="btn btn-primary btn-icon btn-sm" id="submit-exam-btn-header" type="button" data-modal-open="submit-modal" aria-label="Submit exam" title="Submit exam">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="exam-timer" id="exam-timer" role="timer" aria-live="off">--:--</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobile-nav-strip" id="mobile-nav-strip" aria-label="Jump to question"></div>
+
+    <main class="exam-layout">
+      <aside class="card question-nav" aria-label="Question navigator">
+        <div class="question-nav__legend">
+          <span><span class="legend-dot" style="background:var(--color-success)"></span><span data-i18n="common.answered">Answered</span></span>
+          <span><span class="legend-dot" style="background:var(--color-border-strong)"></span><span data-i18n="common.unanswered">Unanswered</span></span>
+          <span><span class="legend-dot" style="background:var(--color-warning)"></span><span data-i18n="common.marked">Marked</span></span>
+        </div>
+        <div class="question-nav__grid" id="question-nav-grid"></div>
+        <div class="question-nav__submit">
+          <button class="btn btn-primary btn-block" id="submit-exam-btn" type="button" data-modal-open="submit-modal" data-i18n="exam.submitExam">Submit Exam</button>
+        </div>
+      </aside>
+
+      <section class="question-stream-col">
+        <p class="exam-progress" id="exam-progress">Question 1 of 1</p>
+        <div class="question-stream" id="question-stream"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==========================================================
+       VIEW: STATISTICS & PREVIEW (was statistics.html)
+       ========================================================== -->
+  <div class="view" id="view-stats" hidden>
+    <header class="stats-navbar">
+      <div class="container">
+        <span class="subpage-header__title subpage-header__title--brand stats-navbar__brand">
+          <img class="site-header__brand-icon" src="" data-brand-icon="true" alt="" aria-hidden="true" width="24" height="24" />
+          <span data-i18n="brand.name">Examcamp</span>
+        </span>
+        <div class="stats-navbar__meta exam-meta">
+          <span class="exam-meta__subject" data-i18n="stats.resultsAnalytics">Results &amp; Analytics</span>
+        </div>
+        <div class="stats-navbar__actions">
+          <button type="button" class="icon-btn icon-btn--home" data-spa-nav="home" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn" id="print-btn-stats" aria-label="Print / Download Preview" title="Print / Download Preview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"/>
+              <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"/>
+              <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="stats-page">
+      <div class="card" id="stats-pending-publish" hidden style="text-align:center; padding: var(--space-8) var(--space-5);">
+        <div style="font-size: 2.5rem; line-height: 1; margin-bottom: var(--space-3);">⏳</div>
+        <h2 data-i18n="stats.pendingPublish.title" style="margin-bottom: var(--space-2);">Waiting for Result Publish</h2>
+        <p class="text-muted" data-i18n="stats.pendingPublish.desc">Your exam has been submitted. The admin hasn't published results for this live exam yet, check back here once they do.</p>
+      </div>
+
+      <div id="stats-result-content">
+      <div class="stats-top">
+        <div class="stats-top__meta">
+          <h1 id="result-subject">Subject</h1>
+          <div class="exam-meta__topic" id="result-topic">Topic</div>
+        </div>
+        <button class="btn btn-primary btn-sm" id="download-btn-stats" type="button">
+          <span class="btn-label-full" data-i18n="common.download">Download</span>
+        </button>
+      </div>
+
+      <div class="headline-card">
+        <div class="headline-ring">
+          <svg viewBox="0 0 128 128">
+            <circle class="track" cx="64" cy="64" r="56"></circle>
+            <circle class="progress" id="headline-ring-progress" cx="64" cy="64" r="56" stroke-dasharray="351.86" stroke-dashoffset="351.86"></circle>
+          </svg>
+          <div class="headline-ring__label" id="result-percentage">0%</div>
+        </div>
+        <div class="headline-body">
+          <div class="text-muted" data-i18n="stats.obtainedMarks">Obtained Marks</div>
+          <div class="headline-marks"><span id="obtained-marks">0</span> <small>/ <span id="total-marks">0</span></small></div>
+          <div class="headline-sub" id="headline-sub">0 correct · 0 wrong · 0 skipped · 0 Attempted · 0:00 Time</div>
+        </div>
+      </div>
+
+      <h2 class="review-heading"><span data-i18n="stats.answerSheet">Answer sheet</span><span class="review-heading__count" id="review-count"></span></h2>
+      <div id="review-list"></div>
+      </div>
+    </main>
+  </div>
+
+
+  <!-- ==========================================================
+       VIEW: PRINT / DOWNLOAD (was print.html)
+       ========================================================== -->
+  <div class="view" id="view-print" hidden>
+    <header class="print-toolbar no-print">
+      <div class="container">
+        <div class="print-toolbar__meta exam-meta">
+          <span class="exam-meta__subject" data-i18n="print.preview">Preview</span>
+        </div>
+        <div class="paper-controls">
+          <button type="button" class="icon-btn icon-btn--back" id="print-back-btn" data-spa-nav="stats" aria-label="Back to Analytics" title="Back to Analytics">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5" />
+              <path d="M11 18l-6 -6 6 -6" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn icon-btn--download" id="download-btn-print" aria-label="Download" title="Download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12" />
+              <path d="M7.5 10.5l4.5 4.5 4.5 -4.5" />
+              <path d="M4.5 19.5h15" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="paper-canvas" id="paper-canvas" data-size="A4">
+      <!-- JS (paginateExam, called from enterPrint) fills this with one or
+           more .paper-page-frame > .paper-page sheets, each a real
+           printable page with its own header/footer and top/bottom
+           padding, scaled to fit the viewport on screen only. -->
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="submit-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="submit-modal-title">
+      <h2 id="submit-modal-title" class="text-h3" data-i18n="exam.submitModal.title">Submit exam?</h2>
+      <div class="modal-summary"><span data-i18n="common.answered">Answered</span><strong id="summary-answered">0</strong></div>
+      <div class="modal-summary"><span data-i18n="common.unanswered">Unanswered</span><strong id="summary-unanswered">0</strong></div>
+      <div class="modal-summary"><span data-i18n="exam.submitModal.marked">Marked for Review</span><strong id="summary-marked">0</strong></div>
+      <p class="text-muted" style="margin-top: var(--space-4); font-size: var(--font-size-small);" data-i18n="exam.submitModal.warning">Your answers cannot be changed after submission.</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" type="button" data-modal-close data-i18n="exam.submitModal.continue">Continue Exam</button>
+        <button class="btn btn-danger" id="confirm-submit-btn" type="button" data-i18n="exam.submitExam">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="delete-account-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="delete-account-title">
+      <h2 id="delete-account-title" class="text-h3" data-i18n="auth.deleteModal.title">Delete your account?</h2>
+      <p class="text-muted" style="margin-top: var(--space-3);" data-i18n="auth.deleteModal.body">This permanently deletes your cloud data (settings, exam history, practice progress, enrollment requests) and your sign-in. Live exam scores stay in the merit list without your name. This cannot be undone.</p>
+      <p id="delete-account-error" class="text-muted" style="margin-top: var(--space-3); color: var(--color-danger);" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" type="button" data-modal-close data-i18n="common.cancel">Cancel</button>
+        <button class="btn btn-danger" id="confirm-delete-account-btn" type="button" data-i18n="auth.deleteModal.confirm">Delete permanently</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="sheet-loading-overlay" role="status" aria-live="polite" aria-hidden="true">
+    <div class="sheet-loading__spinner"></div>
+    <div id="sheet-loading-text">Preparing your sheet…</div>
+  </div>
+
+  <!-- ==========================================================
+       RESULTS & ANALYTICS: DOWNLOAD / PRINT PREFERENCES POPUP
+       Opened by the Download and Print buttons on the Results page.
+       "Answer Sheet" builds the paper with questions + options + the
+       marked answers only (no explanations); "Explanation Sheet" builds
+       the same paper with each question's explanation included.
+       See openPrintPrefsModal / printIncludeExplanations.
+       ========================================================== -->
+  <div class="modal-overlay" id="print-prefs-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="print-prefs-modal-title" style="position: relative;">
+      <button type="button" class="icon-btn" data-modal-close aria-label="Close" style="position: absolute; top: var(--space-4); right: var(--space-4);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h2 id="print-prefs-modal-title" class="text-h3" style="padding-right: var(--space-8);" data-i18n="stats.downloadPrefs.title">Select your download preferences?</h2>
+      <div class="modal-actions" style="gap: var(--space-3); margin-top: var(--space-5);">
+        <button type="button" class="btn btn-outline btn-lg" id="print-prefs-answer-btn" style="flex: 1;" ><span class="btn-label" data-i18n="stats.downloadPrefs.answerSheet">Answer Sheet</span></button>
+        <button type="button" class="btn btn-primary btn-lg" id="print-prefs-explanation-btn" style="flex: 1;" ><span class="btn-label" data-i18n="stats.downloadPrefs.explanationSheet">Explanation Sheet</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       PRACTICE: SELECT INTEREST POPUP (Evaluate / Practice)
+       Opened when a student taps a topic in the Practice Panel. Lets
+       them choose between the untimed Practice Mode (unchanged) and
+       the timed, module-based Evaluate flow. See enterPracticeMode
+       (dispatch point) / openPracticeInterestModal.
+       ========================================================== -->
+  <div class="modal-overlay" id="practice-interest-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="practice-interest-modal-title" style="position: relative;">
+      <button type="button" class="icon-btn" data-modal-close aria-label="Close" style="position: absolute; top: var(--space-4); right: var(--space-4);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h2 id="practice-interest-modal-title" class="text-h3" style="padding-right: var(--space-8);">Select your interest?</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3);">
+        <span class="badge badge-primary" id="practice-interest-modal-subject"></span>
+        <span class="badge badge-neutral" id="practice-interest-modal-topic"></span>
+      </div>
+      <div class="modal-actions" style="gap: var(--space-3); margin-top: var(--space-5);">
+        <button type="button" class="btn btn-outline btn-lg" id="practice-interest-practice-btn" style="flex: 1;">Practice</button>
+        <button type="button" class="btn btn-primary btn-lg" id="practice-interest-evaluate-btn" style="flex: 1;">Evaluate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       PRACTICE: SELECT MODULE POPUP (Evaluate flow)
+       Opened after "Evaluate" is chosen. The topic's question bank is
+       shuffled once and cut into fixed-size, non-overlapping modules
+       (see buildEvaluateModules); each button here launches one
+       module into the existing Exam Mode player (timer/submit/score).
+       ========================================================== -->
+  <div class="modal-overlay" id="practice-module-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="practice-module-modal-title" style="position: relative;">
+      <button type="button" class="icon-btn" data-modal-close aria-label="Close" style="position: absolute; top: var(--space-4); right: var(--space-4);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <h2 id="practice-module-modal-title" class="text-h3" style="padding-right: var(--space-8);">Select your module?</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3);">
+        <span class="badge badge-primary" id="practice-module-modal-subject"></span>
+        <span class="badge badge-neutral" id="practice-module-modal-topic"></span>
+      </div>
+      <div id="practice-module-modal-list" style="gap: var(--space-3); margin-top: var(--space-5);"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       ENROLL NOW POPUP (public)
+       Opened from a locked Live Campaign card's "Enroll Now" badge.
+       Collects Name / Phone / Email / one-or-more Courses / MFS
+       transaction details, and stores the submission in
+       centralExamState.enrollmentRequests for the admin to review
+       under Subscribers → Enrollment Requests and turn into a Member.
+       Draft fields persist to localStorage (see ENROLL_DRAFT_KEY) so
+       closing the popup without submitting doesn't lose what the
+       student already typed.
+       ========================================================== -->
+  <div class="modal-overlay" id="enroll-modal" aria-hidden="true">
+    <div class="modal modal--lg" role="dialog" aria-modal="true" aria-labelledby="enroll-modal-title">
+      <div class="modal__header">
+        <h2 id="enroll-modal-title" class="text-h3" data-i18n="enroll.title">Enroll Now</h2>
+        <button type="button" class="icon-btn" data-modal-close aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="modal__body">
+        <form id="enroll-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="enroll-name" data-i18n="enroll.name">Name</label>
+            <input type="text" class="form-control" id="enroll-name" name="name" placeholder="Your full name" autocomplete="name" aria-describedby="enroll-name-error" />
+            <span class="form-error" id="enroll-name-error" role="alert">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span data-i18n="enroll.nameError">Please enter your name.</span>
+            </span>
+          </div>
+
+          <div class="config-grid">
+            <div class="form-group">
+              <label class="form-label" for="enroll-phone" data-i18n="enroll.phone">Phone number</label>
+              <input type="tel" class="form-control" id="enroll-phone" name="phone" placeholder="e.g. 01XXXXXXXXX" autocomplete="tel" aria-describedby="enroll-phone-error" />
+              <span class="form-error" id="enroll-phone-error" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span data-i18n="enroll.phoneError">Please enter your phone number.</span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="enroll-email" data-i18n="enroll.email">Email</label>
+              <input type="email" class="form-control" id="enroll-email" name="email" placeholder="e.g. name@gmail.com" autocomplete="email" aria-describedby="enroll-email-error" />
+              <span class="form-error" id="enroll-email-error" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span data-i18n="enroll.emailError">Please enter a valid email.</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: var(--space-5);">
+            <label class="form-label" data-i18n="enroll.coursesLabel">Enroll in course(s)</label>
+            <div class="enroll-course-picker" id="enroll-course-picker">
+              <!-- populated by openEnrollModal() from centralExamState.subjects -->
+            </div>
+            <span class="form-error" id="enroll-courses-error" role="alert">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span data-i18n="enroll.coursesError">Please select at least one course.</span>
+            </span>
+          </div>
+
+          <div class="form-group" style="margin-top: var(--space-5);">
+            <div class="enroll-mfs-row">
+              <div>
+                <label class="form-label" for="enroll-mfs-provider" data-i18n="enroll.sendMoney">Send Money</label>
+                <select class="form-control" id="enroll-mfs-provider" name="mfsProvider">
+                  <option value="Bkash">Bkash</option>
+                  <option value="Rocket">Rocket</option>
+                  <option value="Nagad">Nagad</option>
+                  <option value="Upay">Upay</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" for="enroll-mfs-txn" style="font-size: var(--font-size-caption);" data-i18n="enroll.transactionId">Transaction ID</label>
+                <input type="text" class="form-control" id="enroll-mfs-txn" name="mfsTransactionId" placeholder="e.g. 9G7H2K1LMN" autocapitalize="characters" aria-describedby="enroll-mfs-txn-error" />
+                <span class="form-error" id="enroll-mfs-txn-error" role="alert">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span data-i18n="enroll.transactionIdError">Please enter the Transaction ID.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal__footer">
+        <button type="button" class="btn btn-outline" data-modal-close data-i18n="common.cancel">Cancel</button>
+        <button type="submit" form="enroll-form" class="btn btn-primary" id="enroll-submit-btn" data-i18n="common.submit">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main application script (config, state, and all view logic). -->
+
+  <!-- Examcamp PWA registration -->
+  
+
+  <!-- Custom select enhancer: replaces the native <option> popup (which
+       browsers render outside our CSS control and style inconsistently)
+       with an on-brand, fully themeable listbox built from plain divs.
+       Runs after everything else so it can enhance selects that exist at
+       load time, and a MutationObserver keeps enhancing any select added
+       later (settings panels, modals, dynamically built forms, etc.). -->
+
+  <!-- ==========================================================
+       ADMIN CONTROL — separate settings drawer, opened only from the
+       Practice page header. Groups the Live Exam Admin Panel and the
+       Practice Admin Panel. Each row is shown only if the signed-in
+       user passes that panel's existing gate (isLiveExamAdmin /
+       isPracticeAdmin), and navigation still goes through
+       navigateToView() so those gates are enforced there too.
+       ========================================================== -->
+  <div class="modal-overlay" id="admin-control-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="admin-control-title">
+      <div class="modal__header">
+        <h2 id="admin-control-title" class="text-h3">Admin Control</h2>
+        <button type="button" class="icon-btn" data-modal-close aria-label="Close Admin Control">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="settings-section" style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" id="admin-control-live-btn" style="flex: 1; min-width: 140px;">LE Admin</button>
+          <button type="button" class="btn btn-primary" id="admin-control-practice-btn" style="flex: 1; min-width: 140px;">QB Admin</button>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn-outline" data-modal-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="pwa-register.js" defer></script>
+
+</body>
+</html>

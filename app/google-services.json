@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "772575586144",
+    "project_id": "exampedia-2962a",
+    "storage_bucket": "exampedia-2962a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772575586144:android:5dc9da48e11ae4af986005",
+        "android_client_info": {
+          "package_name": "com.examcamp.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772575586144-efho69s680err9qgbemst7a80qpru340.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.examcamp.app",
+            "certificate_hash": "c35b18fa4148e14281293f85c079a56ef977b0e8"
+          }
+        },
+        {
+          "client_id": "772575586144-np02ecapd2ik1hits315npqk1jiv00jv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDClgkx9VjJNdDdV1n4O1vZl3EdH-x_FuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772575586144-np02ecapd2ik1hits315npqk1jiv00jv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

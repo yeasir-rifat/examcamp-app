@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.yeasir_rifat.twa",
+        "sha256_cert_fingerprints": ["86:8D:0C:87:A3:C3:23:6A:CA:DA:8D:9A:14:D4:9C:08:25:C5:87:E1:4B:CC:CF:3D:AF:19:5D:77:0A:38:B5:90"]
+      }
+    }]
